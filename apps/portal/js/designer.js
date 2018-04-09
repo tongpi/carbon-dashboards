@@ -623,7 +623,7 @@ $(function () {
             async: false,
             contentType: 'application/json'
         }).success(function (data) {
-            generateMessage("Dashboard saved successfully", null, null, "success", "topCenter", 2000, null);
+            generateMessage("仪表板保存成功！", null, null, "success", "topCenter", 2000, null);
             if (isRedirect) {
                 isRedirect = false;
                 window.location = dashboardsUrl + '/' + dashboard.id + "?editor=true";
@@ -633,7 +633,7 @@ $(function () {
                 window.location.reload();
                 return;
             }
-            generateMessage("Error saving the dashboard", null, null, "error", "topCenter", 2000, null);
+            generateMessage("仪表板保存出错！", null, null, "error", "topCenter", 2000, null);
         });
     };
 
@@ -1220,8 +1220,8 @@ $(function () {
         var fn = {
             id: function () {
                 if (checkForPagesById(idVal) && page.id != idVal) {
-                    showInformation("URL Already Exists",
-                        "A page with entered URL already exists. Please select a different URL");
+                    showInformation("URL已经存在",
+                        "已输入URL的页面已经存在。请选择不同的URL。");
                     id.val(page.id);
                 } else {
                     updateMenu(page.id, idVal, 'id');
@@ -1234,8 +1234,8 @@ $(function () {
             },
             title: function () {
                 if (checkForPagesByTitle(titleVal) && page.title.toUpperCase() != titleVal.toUpperCase()) {
-                    showInformation("Title Already Exists",
-                        "A page with same title already exists. Please enter a different title");
+                    showInformation("标题已经存在",
+                        "具有相同标题的页面已经存在。请输入一个不同的标题。");
                     title.val(page.title);
                     titleVal = page.title;
                 } else {
@@ -1247,12 +1247,12 @@ $(function () {
                 if (landing.is(':checked')) {
                     if (hasAnonPages && !page.isanon) {
                         landing.prop("checked", false);
-                        showInformation("Cannot Select This Page As Landing",
-                            "Please add an anonymous view to this page before select it as the landing page");
+                        showInformation("不能选择此页面作为登录",
+                            "请在此页面添加一个匿名视图，然后选择它作为登录页面。");
                     } else if (ishiddenPage(idVal)) {
                         landing.prop("checked", false);
-                        showInformation("Cannot Select This Page As Landing",
-                            "This page is hidden in the menu, please select a different page");
+                        showInformation("不能选择此页面作为登录。",
+                            "此页面隐藏在菜单中，请选择不同的页面。");
                     } else {
                         dashboard.landing = idVal;
                         var menuItem = getChild(dashboard.menu, idVal);
@@ -1276,14 +1276,13 @@ $(function () {
                         $('#designer-view-mode li[data-view-mode=anon] a').click();
                     } else {
                         $(anon).prop("checked", false);
-                        showInformation("Cannot Make This Page Anonymous",
-                            "Please add an anonymous view to the landing page in order to make this page anonymous");
+                        showInformation("无法使用该页面匿名。",
+                            "请在登录页面添加一个匿名视图，以使该页面成为匿名的。");
                     }
                 } else {
                     if (hasAnonPages && dashboard.landing == idVal) {
                         $(anon).prop("checked", true);
-                        showInformation("Cannot Remove The Anonymous View", "Cannot remove the anonymous view of " +
-                            "landing page when there are pages with anonymous views");
+                        showInformation("无法删除匿名视图", "当有带有匿名视图的页面时，无法删除登录页面的匿名视图。");
                     } else {
                         page.isanon = false;
                         updateMenu(page.id, false, 'isanon');
@@ -1380,7 +1379,7 @@ $(function () {
         var draggable = ui.draggable;
         // dropping an anon page in to a non-anon container
         if (draggable.attr('data-anon') === 'true' && $(event.target).attr('data-anon') === 'false') {
-            showInformation("Cannot drop anonymous page in to a non anonymous page container.");
+            showInformation("不能将匿名页删除到非匿名页面容器中。");
             return;
         }
 
@@ -1911,8 +1910,8 @@ $(function () {
                 // reset the dashboard
                 event.preventDefault();
                 var that = $(this);
-                showConfirm('Resetting the page',
-                    'This will remove all the customization added to the dashboard. Do you want to continue?',
+                showConfirm('重置页面',
+                    '这将删除添加到仪表板的所有定制。你还想继续吗?',
                     function () {
                         window.open(that.attr('href'), "_self");
                     });
@@ -1933,8 +1932,8 @@ $(function () {
                 // delete dashboard page
                 var pid = $(this).attr('data-page-id');
 
-                showConfirm('Deleting the page',
-                    'This will remove the page and all its content. Do you want to continue?',
+                showConfirm('删除页面',
+                    '这将删除页面及其所有内容。你还想继续吗？',
                     function () {
                         var pages = dashboard.pages;
                         //check whether there are any subordinates
@@ -1968,7 +1967,7 @@ $(function () {
                             });
                             return true;
                         } else {
-                            pages.length !== 1 ? showInformation("Unable to remove this page. Make sure this page doesn't have any subordinates,all pages are hidden or ") : showInformation("Unable to remove the last page")
+                            pages.length !== 1 ? showInformation("无法删除此页。确保这个页面没有任何下属，所有页面都是隐藏的。") : showInformation("无法删除最后一页。")
                             return false;
                         }
 
@@ -2183,8 +2182,7 @@ $(function () {
         initAddBlock();
 
         if (ues.global.dashboard.isEditorEnable && ues.global.dashboard.isUserCustom) {
-            showInformation("Received Edit Permission", "You have given edit permission for this dashboard. Please " +
-                "reset the dashboard to receive the permission.");
+            showInformation("收到修改的权限", "您已经为这个仪表板提供了修改权限。请重新设置仪表板以获得许可。");
         }
     };
 

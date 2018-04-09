@@ -78,11 +78,11 @@
                 <div class="wizard-inner nav-bar">
                     <div class="navbar-inner">
                         <ul class="wiz-nav-inner with-controls">
-                            <li class="wiz-control btn-previous"><i class="fw fw-left fw-2x"></i><a class="hidden-xs ">Previous</a></li>
+                            <li class="wiz-control btn-previous"><i class="fw fw-left fw-2x"></i><a class="hidden-xs "><%= i18n.localize("generate.a.previous")%></a></li>
                             <li class="wiz-step current active"><a href="#tab1" data-toggle="tab"><span>1</span><span class="hidden-xs"><%= i18n.localize("select.provider")%></span></a></li>
                             <li class="wiz-step"><a href="#tab2" data-toggle="tab"><span>2</span><span class="hidden-xs"><%= i18n.localize("configure.provider")%></span></a></li>
                             <li class="wiz-step"><a href="#tab3" data-toggle="tab"><span>3</span><span class="hidden-xs"><%= i18n.localize("configure.chart")%></span></a></li>
-                            <li class="wiz-control btn-next"><i class="fw fw-right fw-2x"></i><a class="hidden-xs">Next</a></li>
+                            <li class="wiz-control btn-next"><i class="fw fw-right fw-2x"></i><a class="hidden-xs"><%= i18n.localize("next")%></a></li>
                         </ul>
                     </div>
                 </div>
@@ -215,8 +215,7 @@
     <br><br><br>
     <div class="alert alert-danger" role="alert">
         <i class="icon fw fw-error"></i>
-        <strong>Something went wrong while initiating Gadget generation wizard. Please see the detailed error message below.
-        </strong></br><br/> {{error}}
+        <strong><%=i18n.localize("wizard.error")%></strong></br><br/> {{error}}
     </div>
 </script>
 <script id="wizard-zerods-hbs" type="text/x-handlebars-template">

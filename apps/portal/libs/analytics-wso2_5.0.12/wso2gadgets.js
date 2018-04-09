@@ -58,7 +58,7 @@
     wso2gadgets.load = function(id, context) {
         currentView = views[id];
         if (!currentView) {
-            throw new Error("View with specified id [" + id + "] does not exist.");
+            throw new Error("查看指定的ID [" + id + "] 不存在");
         }
         //load data into current view using view's data configuration
         if (currentView.data && typeof currentView.data === "function") {

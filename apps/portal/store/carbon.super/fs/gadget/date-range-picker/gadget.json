@@ -1,8 +1,8 @@
 {
   "id": "date-range-picker",
-  "title": "Date Range Picker",
+  "title": "日期范围选择器",
   "type": "gadget",
-  "category": "Widgets",
+  "category": "小部件",
   "thumbnail": "gadget/date-range-picker/index.png",
   "data": {
     "url": "gadget/date-range-picker/index.xml"

@@ -6,7 +6,7 @@
     },
     "config" : [
         {
-            "fieldLabel" : "Database URL",
+            "fieldLabel" : "数据库URL",
             "fieldName" :"db_url",
             "fieldType" : "string",
             "defaultValue" : "",
@@ -15,28 +15,28 @@
             "placeholderText" : "jdbc:mysql://localhost:3306/dbname"
         },
         {
-            "fieldLabel" : "Table Name",
+            "fieldLabel" : "表名",
             "fieldName" :"table_name",
             "fieldType" : "string",
             "defaultValue" : "",
             "isRequired" : true
         },
         {
-            "fieldLabel" : "Username",
+            "fieldLabel" : "用户名",
             "fieldName" :"username",
             "fieldType" : "string",
             "defaultValue" : "",
             "isRequired" : true
         },
         {
-            "fieldLabel" : "Password",
+            "fieldLabel" : "密码",
             "fieldName" :"password",
             "fieldType" : "password",
             "defaultValue" : "",
             "isRequired" : true
         },
         {
-            "fieldLabel" : " SQL Query",
+            "fieldLabel" : "sql查询",
             "fieldName" :"query",
             "fieldType" : "string",
             "isRequired" : true

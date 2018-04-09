@@ -1,6 +1,6 @@
 {
     "id": "usa-map",
-    "title": "USA Map",
+    "title": "美国地图",
     "type": "gadget",
     "thumbnail": "gadget/usa-map/index.png",
     "settings": {

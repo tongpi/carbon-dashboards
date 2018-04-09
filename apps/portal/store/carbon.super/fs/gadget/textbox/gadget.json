@@ -1,8 +1,8 @@
 {
   "id": "textbox",
-  "title": "Text Box",
+  "title": "文本框",
   "type": "gadget",
-  "category": "Widgets",
+  "category": "小部件",
   "thumbnail": "gadget/textbox/index.png",
   "data": {
     "url": "gadget/textbox/index.xml"

@@ -56,7 +56,7 @@ $('#rootwizard').bootstrapWizard({
 
         if(index == 2) {
             if(isRequiredFieldsFilled){
-                $('.btn-next a').text('Add to store').removeClass('disabled');
+                $('.btn-next a').text('添加到商店').removeClass('disabled');
                 $('#lastTab').removeClass("tab-link-disabled");
             }
         }
@@ -75,7 +75,7 @@ $('#rootwizard').bootstrapWizard({
     },
     onPrevious: function(tab, navigation, index){
         if(index != -1){
-            $('.btn-next a').text('Next');
+            $('.btn-next a').text('下一步');
             tab.removeClass('current');
             tab.prev().removeClass('completed').addClass('current');
         }
@@ -125,7 +125,7 @@ $('#test-connection').click(function () {
             $('#test-verification-label').show();
         },
         error: function (xhr, message, errorObj) {
-            $('#tab2-validation-errors > .text').html('<strong>Error!</strong> in database configuration');
+            $('#tab2-validation-errors > .text').html('在数据库配置时出现错误');
             $('#tab2-validation-errors').show();
             $('#test-verification-label').hide();
         }

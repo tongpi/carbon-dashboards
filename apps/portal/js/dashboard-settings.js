@@ -141,7 +141,7 @@ $(function () {
             contentType: 'application/json',
             async: false
         }).success(function (data) {
-            generateMessage("Dashboard saved successfully", null, null, "success", "topCenter", 2000);
+            generateMessage("仪表板保存成功", null, null, "success", "topCenter", 2000);
             if (callback) {
                 callback();
             }
@@ -150,7 +150,7 @@ $(function () {
                 window.location.reload();
                 return;
             }
-            generateMessage("Error saving the dashboard", null, null, "error", "topCenter", 2000);
+            generateMessage("仪表板保存时出错", null, null, "error", "topCenter", 2000);
         });
     };
 
@@ -173,10 +173,10 @@ $(function () {
             } else {
                 setOAuthSettingsFields(data.accessTokenUrl, data.key, data.secret);
                 $("#ues-oauth-settings-inputs").show();
-                generateMessage("Dashboard saved successfully", null, null, "success", "topCenter", 2000);
+                generateMessage("仪表板保存成功", null, null, "success", "topCenter", 2000);
             }
         }).error(function () {
-            generateMessage("Error getting OAuth settings", null, null, "error", "topCenter", 2000);
+            generateMessage("仪表板保存时出错", null, null, "error", "topCenter", 2000);
         });
     };
 
@@ -567,9 +567,8 @@ $(function () {
 
             if ((editors.length === 1 || (getNumberOfUserRolesInDashboard(editors) === 1
                 && isExistingPermission(user.roles, role))) && !user.isAdmin) {
-                showConfirm("Removing Permission",
-                    "After this permission removal only administrator will be able to edit this dashboard." +
-                    " Do you want to continue?", removePermission);
+                showConfirm("删除权限",
+                    "删除此权限后，只有管理员才能编辑此仪表板。你想继续吗？" , removePermission);
             } else {
                 removePermission();
             }
@@ -587,9 +586,8 @@ $(function () {
             if ((viewers.length === 1 || (getNumberOfUserRolesInDashboard(viewers) === 1
                 && isExistingPermission(user.roles, role)))
                 && !user.isAdmin) {
-                showConfirm("Removing Permission",
-                    "After this permission removal only administrator will be able to view this dashboard." +
-                    " Do you want to continue?", removePermission);
+                showConfirm("删除权限",
+                    "删除此权限后，只有管理员才能查看此仪表板。你想继续吗？" , removePermission);
             } else {
                 removePermission();
             }
@@ -606,9 +604,8 @@ $(function () {
 
             if ((owners.length === 1 || (getNumberOfUserRolesInDashboard(owners) === 1
                 && isExistingPermission(user.roles, role))) && !user.isAdmin) {
-                showConfirm("Removing Permission",
-                    "After this permission removal only administrator will be able to view this dashboard." +
-                    " Do you want to continue?", removePermission);
+            	showConfirm("删除权限",
+                        "删除此权限后，只有管理员才能查看此仪表板。你想继续吗？" , removePermission);
             } else {
                 removePermission();
             }

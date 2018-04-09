@@ -1,6 +1,6 @@
 {
     "id": "balanced",
-    "title": "Balanced Grid",
+    "title": "平衡网格",
     "description": "Balanced grid layout",
     "thumbnail": "layout/balanced/index.png",
     "url": "layout/balanced/index.json"

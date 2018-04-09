@@ -16,10 +16,10 @@
  */
 %>
 <div class="light-dark-switcher">
-    <label>Light</label>
+    <label><%=i18n.localize("ligh")%></label>
     <label class="switch">
         <input type="checkbox" data-toggle="theme" <% if (gadgetTheme == 'dark') { %> checked="checked" <% } %>>
         <span class="helper"></span>
     </label>
-    <label>Dark</label>
+    <label><%=i18n.localize("dark")%></label>
 </div>

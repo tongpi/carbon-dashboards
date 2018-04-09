@@ -1,6 +1,6 @@
 {
     "id": "banner",
-    "title": "Default Grid with Banner",
+    "title": "带横幅的默认网格",
     "description": "Default grid layout with banner",
     "thumbnail": "layout/banner/index.png",
     "url": "layout/banner/index.json"

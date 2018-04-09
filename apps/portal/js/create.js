@@ -159,8 +159,8 @@ $(function () {
                 contentType: "application/json",
                 async: false,
                 success: function (data) {
-                    showInformation("URL Already Exists",
-                        "A dashboard with same URL already exists. Please enter a different dashboard URL.");
+                    showInformation("URL已存在",
+                        "具有相同url的仪表板已经存在。请输入不同的仪表板网址");
                 },
                 error: function (xhr) {
                     if (xhr.status == 404) {

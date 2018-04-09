@@ -1,8 +1,8 @@
 {
   "id": "date-picker-widget",
-  "title": "Date Picker Widget",
+  "title": "日期选取器小部件",
   "type": "widget",
-  "category": "Widgets",
+  "category": "小部件",
   "thumbnail": "gadget/date-picker-widget/index.png",
   "data": {
     "url": "gadget/date-picker-widget/index.xml"

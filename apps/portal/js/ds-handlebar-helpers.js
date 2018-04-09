@@ -91,7 +91,7 @@ Handlebars.registerHelper('traverseMenu', function (menu, designer, isAnonView, 
 
     if(designer){
         divTree += "<li class='ds-menu-root' style='margin: 0 0 10px 0;' id='ds-menu-root'>" +
-        "<i class='fw fw-up'></i> Make Root</li>" + 
+        "<i class='fw fw-up'></i> 创建根目录</li>" + 
             "<li class='hide-all' style='margin: 0 0 10px 0;'><input type='checkbox' " + checked +
                 " name='ds-menu-hide-all' value='hide' id='ds-menu-hide-all'> <i class='fw fw-view'></i> Hide All</li>";
     }

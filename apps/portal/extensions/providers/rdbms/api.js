@@ -75,7 +75,7 @@ var getConfig, validate, getMode, getSchema, getData, registerCallBackforPush;
         } catch (e) {
             return {
                 "error" : true,
-                "message" : "Error Connecting to Database"
+                "message" : "连接数据库出错"
             }
         } finally {
             if (db != null) {

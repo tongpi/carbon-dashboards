@@ -27,7 +27,7 @@
     function only_once(fn) {
         var called = false;
         return function() {
-            if (called) throw new Error("Callback was already called.");
+            if (called) throw new Error("回调已被调用。");
             called = true;
             fn.apply(root, arguments);
         }
@@ -529,7 +529,7 @@
     async.waterfall = function (tasks, callback) {
         callback = callback || function () {};
         if (!_isArray(tasks)) {
-            var err = new Error('First argument to waterfall must be an array of functions');
+            var err = new Error('第一个参数必须是一个函数数组');
             return callback(err);
         }
         if (!tasks.length) {

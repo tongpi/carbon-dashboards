@@ -155,7 +155,7 @@
     <script id="ds-asset-confirm-hbs" type="text/x-handlebars-template">
         <h2><%= i18n.localize("delete.dashboard.confirm")%> {{title}}?</h2>
         <div class="alert alert-warning" role="alert">
-            <i class="icon fw fw-error"></i><strong>Warning!</strong> <%= i18n.localize(assetType+".delete.warning")%>
+            <i class="icon fw fw-error"></i><%= i18n.localize(assetType+".delete.warning")%>
         </div>
         <div class="ds-trash-actions" >
             <a href="#" class="btn btn-danger ladda-button ds-asset-trash-confirm" role="button"

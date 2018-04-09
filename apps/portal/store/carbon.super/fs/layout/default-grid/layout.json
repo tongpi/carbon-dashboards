@@ -1,6 +1,6 @@
 {
     "id": "default-grid",
-    "title": "Default Grid",
+    "title": "默认网格",
     "description": "Default grid layout",
     "thumbnail": "layout/default-grid/index.png",
     "url": "layout/default-grid/index.json"

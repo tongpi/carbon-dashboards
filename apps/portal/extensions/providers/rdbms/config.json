@@ -1,21 +1,21 @@
 {
     "info": {
         "id": "rdbms",
-        "name": "Relational Database Source",
+        "name": "关系数据库",
         "image": ""
     },
     "config" : [
         {
-            "fieldLabel" : "Database URL",
+            "fieldLabel" : "数据库 URL",
             "fieldName" :"dbUrl",
             "fieldType" : "string",
             "defaultValue" : "",
             "isRequired" : true,
-            "hint": "This is a sample hint",
+            "hint": "示例提示",
             "placeholderText" : "jdbc:mysql://localhost:3306/dbname"
         },
         {
-             "fieldLabel" : "Driver Class Name",
+             "fieldLabel" : "驱动类",
              "fieldName" :"driverClassName",
              "fieldType" : "string",
              "defaultValue" : "",
@@ -23,28 +23,28 @@
              "placeholderText" : "com.mysql.jdbc.Driver"
          },
         {
-            "fieldLabel" : "Table Name",
+            "fieldLabel" : "表名",
             "fieldName" :"tableName",
             "fieldType" : "string",
             "defaultValue" : "",
             "isRequired" : true
         },
         {
-            "fieldLabel" : "Username",
+            "fieldLabel" : "用户名",
             "fieldName" :"userName",
             "fieldType" : "string",
             "defaultValue" : "",
             "isRequired" : true
         },
         {
-            "fieldLabel" : "Password",
+            "fieldLabel" : "密码",
             "fieldName" :"password",
             "fieldType" : "password",
             "defaultValue" : "",
             "isRequired" : true
         },
         {
-            "fieldLabel" : " SQL Query",
+            "fieldLabel" : " SQL 查询",
             "fieldName" :"query",
             "fieldType" : "string",
             "isRequired" : true
@@ -121,3 +121,4 @@
         }
     ]
 }
+

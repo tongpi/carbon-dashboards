@@ -1,4 +1,4 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.vg = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.vg = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("找不到模块 '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports = {
   version: '2.5.2',
   dataflow: require('vega-dataflow'),
@@ -282,7 +282,7 @@ module.exports = {
   };
 
   function FormatSpecifier(specifier) {
-    if (!(match = re.exec(specifier))) throw new Error("invalid format: " + specifier);
+    if (!(match = re.exec(specifier))) throw new Error("无效的格式: " + specifier);
 
     var match,
         fill = match[1] || " ",
@@ -3046,7 +3046,7 @@ gen.range = function(start, stop, step) {
       start = 0;
     }
   }
-  if ((stop - start) / step == Infinity) throw new Error('Infinite range');
+  if ((stop - start) / step == Infinity) throw new Error('无限范围');
   var range = [], i = -1, j;
   if (step < 0) while ((j = start + step * ++i) > stop) range.push(j);
   else while ((j = start + step * ++i) < stop) range.push(j);
@@ -6331,7 +6331,7 @@ prototype.connect = function(branch) {
     data = node.dependency(Deps.DATA);
     for (j=0, m=data.length; j<m; ++j) {
       if (!(x=this.data(y=data[j]))) {
-        throw new Error('Unknown data source ' + dl.str(y));
+        throw new Error('未知数据源 ' + dl.str(y));
       }
 
       x.addListener(collector);
@@ -6340,7 +6340,7 @@ prototype.connect = function(branch) {
     signals = node.dependency(Deps.SIGNALS);
     for (j=0, m=signals.length; j<m; ++j) {
       if (!(x=this.signal(y=signals[j]))) {
-        throw new Error('Unknown signal ' + dl.str(y));
+        throw new Error('未知信号 ' + dl.str(y));
       }
 
       x.addListener(collector);
@@ -7013,7 +7013,7 @@ module.exports = (function() {
 
     if ("startRule" in options) {
       if (!(options.startRule in peg$startRuleFunctions)) {
-        throw new Error("Can't start parsing from rule \"" + options.startRule + "\".");
+        throw new Error("无法按规则开始解析 \"" + options.startRule + "\".");
       }
 
       peg$startRuleFunction = peg$startRuleFunctions[options.startRule];
@@ -8088,7 +8088,7 @@ module.exports = function(opt) {
     if (typeof ast === 'string') return ast;
     var generator = CODEGEN_TYPES[ast.type];
     if (generator == null) {
-      throw new Error('Unsupported type: ' + ast.type);
+      throw new Error('不受支持的类型: ' + ast.type);
     }
     return generator(ast);
   }
@@ -8114,7 +8114,7 @@ module.exports = function(opt) {
           }
         }
         if (idBlackList && idBlackList.hasOwnProperty(id)) {
-          throw new Error('Illegal identifier: ' + id);
+          throw new Error('非法标识符: ' + id);
         }
         return id;
       },
@@ -8132,12 +8132,12 @@ module.exports = function(opt) {
       },
     'CallExpression': function(n) {
         if (n.callee.type !== 'Identifier') {
-          throw new Error('Illegal callee type: ' + n.callee.type);
+          throw new Error('非法的被调用者类型: ' + n.callee.type);
         }
         var callee = n.callee.name;
         var args = n.arguments;
         var fn = functions.hasOwnProperty(callee) && functions[callee];
-        if (!fn) throw new Error('Unrecognized function: ' + callee);
+        if (!fn) throw new Error('无法识别的函数: ' + callee);
         return fn instanceof Function ?
           fn(args, globals, fields, dataSources) :
           fn + '(' + args.map(codegen).join(',') + ')';
@@ -8241,9 +8241,9 @@ module.exports = function(codegen) {
 
     'clamp': function(args) {
       if (args.length < 3)
-        throw new Error('Missing arguments to clamp function.');
+        throw new Error('缺少参数');
       if (args.length > 3)
-        throw new Error('Too many arguments to clamp function.');
+        throw new Error('多余参数');
       var a = args.map(codegen);
       return 'Math.max('+a[1]+', Math.min('+a[2]+','+a[0]+'))';
     },
@@ -8292,9 +8292,9 @@ module.exports = function(codegen) {
     // Control Flow functions
     'if': function(args) {
         if (args.length < 3)
-          throw new Error('Missing arguments to if function.');
+          throw new Error('缺少参数');
         if (args.length > 3)
-          throw new Error('Too many arguments to if function.');
+          throw new Error('多余参数');
         var a = args.map(codegen);
         return a[0]+'?'+a[1]+':'+a[2];
       }
@@ -8485,7 +8485,7 @@ module.exports = (function() {
 
   function assert(condition, message) {
       if (!condition) {
-          throw new Error('ASSERT: ' + message);
+          throw new Error('断言: ' + message);
       }
   }
 
@@ -9774,12 +9774,12 @@ module.exports = (function() {
           );
 
       if (typeof token.lineNumber === 'number') {
-          error = new Error('Line ' + token.lineNumber + ': ' + msg);
+          error = new Error('行 ' + token.lineNumber + ': ' + msg);
           error.index = token.start;
           error.lineNumber = token.lineNumber;
           error.column = token.start - lineStart + 1;
       } else {
-          error = new Error('Line ' + lineNumber + ': ' + msg);
+          error = new Error('行 ' + lineNumber + ': ' + msg);
           error.index = index;
           error.lineNumber = lineNumber;
           error.column = index - lineStart + 1;
@@ -10057,7 +10057,7 @@ module.exports = (function() {
           }
           expr = node.finishLiteral(lex());
       } else if (type === Token.Keyword) {
-          throw new Error("Disabled.");
+          throw new Error("不可用");
       } else if (type === Token.BooleanLiteral) {
           token = lex();
           token.value = (token.value === 'true');
@@ -10165,7 +10165,7 @@ module.exports = (function() {
 
       if (lookahead.type === Token.Punctuator) {
           if ((match('++') || match('--')) && !peekLineTerminator()) {
-              throw new Error("Disabled.");
+              throw new Error("不可用");
           }
       }
 
@@ -10180,14 +10180,14 @@ module.exports = (function() {
       if (lookahead.type !== Token.Punctuator && lookahead.type !== Token.Keyword) {
           expr = parsePostfixExpression();
       } else if (match('++') || match('--')) {
-          throw new Error("Disabled.");
+          throw new Error("不可用");
       } else if (match('+') || match('-') || match('~') || match('!')) {
           startToken = lookahead;
           token = lex();
           expr = parseUnaryExpression();
           expr = new WrappingNode(startToken).finishUnaryExpression(token.value, expr);
       } else if (matchKeyword('delete') || matchKeyword('void') || matchKeyword('typeof')) {
-          throw new Error("Disabled.");
+          throw new Error("不可用");
       } else {
           expr = parsePostfixExpression();
       }
@@ -10371,7 +10371,7 @@ module.exports = (function() {
       var expr = parseAssignmentExpression();
 
       if (match(',')) {
-          throw new Error("Disabled."); // no sequence expressions
+          throw new Error("不可用"); // no sequence expressions
       }
 
       return expr;
@@ -10397,7 +10397,7 @@ module.exports = (function() {
       }
 
       if (type === Token.Punctuator && lookahead.value === '{') {
-          throw new Error("Disabled."); // block statement
+          throw new Error("不可用"); // block statement
       }
 
       node = new Node();
@@ -10405,14 +10405,14 @@ module.exports = (function() {
       if (type === Token.Punctuator) {
           switch (lookahead.value) {
           case ';':
-              throw new Error("Disabled."); // empty statement
+              throw new Error("不可用"); // empty statement
           case '(':
               return parseExpressionStatement(node);
           default:
               break;
           }
       } else if (type === Token.Keyword) {
-          throw new Error("Disabled."); // keyword
+          throw new Error("不可用"); // keyword
       }
 
       expr = parseExpression();
@@ -10427,9 +10427,9 @@ module.exports = (function() {
           switch (lookahead.value) {
           case 'const':
           case 'let':
-              throw new Error("Disabled.");
+              throw new Error("不可用");
           case 'function':
-              throw new Error("Disabled.");
+              throw new Error("不可用");
           default:
               return parseStatement();
           }
@@ -14594,8 +14594,8 @@ prototype.viewport = function(size) {
 prototype.renderer = function(type) {
   if (!arguments.length) return this._renderer;
   if (this._renderers[type]) type = this._renderers[type];
-  else if (dl.isString(type)) throw new Error('Unknown renderer: ' + type);
-  else if (!type) throw new Error('No renderer specified');
+  else if (dl.isString(type)) throw new Error('未知的渲染器: ' + type);
+  else if (!type) throw new Error('没有指定渲染器');
 
   if (this._io !== type) {
     this._io = type;
@@ -16604,7 +16604,7 @@ function parseTransforms(model, def) {
   var transform = transforms[def.type],
       tx;
 
-  if (!transform) throw new Error('"' + def.type + '" is not a valid transformation');
+  if (!transform) throw new Error('"' + def.type + '" 不是有效的转换');
 
   tx = new transform(model);
   // We want to rename output fields before setting any other properties,

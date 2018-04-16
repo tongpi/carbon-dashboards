@@ -2569,7 +2569,7 @@ $(function () {
         if (type === 'landing' || !pages.length) {
             return {
                 id: 'landing',
-                title: 'Home'
+                title: '首页'
             };
         }
         if (type === 'login') {

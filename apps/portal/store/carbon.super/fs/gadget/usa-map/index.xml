@@ -26,7 +26,7 @@
 </head>
 <body>
 <div>
-<label id="defaultViewLabel">USA MAP (This is default view)</label>
+<label id="defaultViewLabel">美国地图（这是默认视图）</label>
 <svg id="map" viewBox="0 0 1000 800" preserveAspectRatio="xMidYMid"></svg>
 <script src="/portal/libs/jquery_1.11.0/jquery-1.11.3.min.js"></script>
 <script src="js/uStates.js"></script>

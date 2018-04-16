@@ -3,7 +3,7 @@
     "title": "发行者",
     "type": "gadget",
     "thumbnail": "gadget/usa-business-revenue/index.png",
-    "category": "Publishers",
+    "category": "发行者",
     "data": {
         "url": "gadget/publisher/index.xml"
     },

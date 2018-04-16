@@ -18,12 +18,12 @@
 <% if (user) { %>
     <% if (!isAnonView && (urlDomain == user.domain || (user.domain == superDomain && (!urlDomain || urlDomain == superDomain)))) { %>
         <% if (dashboard.shareDashboard && user.domain != superDomain) { %>
-            <li><a href="<%=portalRoot%>"><i class="icon fw fw-view ues-copy" title="<%= i18n.localize("view.button")%>"></i>Dashboard Portal</a></li>
+            <li><a href="<%=portalRoot%>"><i class="icon fw fw-view ues-copy" title="<%= i18n.localize("view.button")%>"></i>仪表板门户</a></li>
         <% } else { %>
             <% if (user.isEditor || user.isOwner) { %>
-                <li><a href="<%=dbRoot%>?editor=true"><i class="icon fw fw-settings ues-copy" title="<%= i18n.localize("edit.button")%>"></i>Dashboard Settings</a></li>
+                <li><a href="<%=dbRoot%>?editor=true"><i class="icon fw fw-settings ues-copy" title="<%= i18n.localize("edit.button")%>"></i>仪表板设置</a></li>
             <% } else { %>
-                <li><a href="<%=dbRoot%>?custom=true"><i class="icon fw fw-settings ues-copy" title="<%= i18n.localize("personalize")%>"></i>Customize Dashboard</a></li>
+                <li><a href="<%=dbRoot%>?custom=true"><i class="icon fw fw-settings ues-copy" title="<%= i18n.localize("personalize")%>"></i>自定义仪表板</a></li>
             <% } %>
         <% } %>
     <% } %>

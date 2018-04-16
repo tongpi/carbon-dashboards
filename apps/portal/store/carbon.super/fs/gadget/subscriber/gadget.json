@@ -2,7 +2,7 @@
     "id": "subscriber",
     "title": "订购者",
     "type": "gadget",
-    "category": "Subscribers",
+    "category": "订购者",
     "thumbnail": "gadget/usa-business-revenue/index.png",
     "data": {
         "url": "gadget/subscriber/index.xml"

@@ -177,7 +177,7 @@
                             </button>
                                 
                             <div class="form-group has-form-control-btn remove-margin-bottom add-margin-top-3x ues-search-box">
-                                <button class="form-control-btn" type="button" title="Search">
+                                <button class="form-control-btn" type="button" title="查询">
                                     <i class="fw fw-search" aria-hidden="true"></i>
                                 </button>
                                 <input type="text" class="form-control" placeholder="<%=i18n.localize("search.label")%>...">
@@ -235,7 +235,7 @@
                         <div class="add-padding-3x">
 
                             <div class="form-group has-form-control-btn ues-search-box">
-                                <button class="form-control-btn" type="button" title="Search">
+                                <button class="form-control-btn" type="button" title="查询">
                                     <i class="fw fw-search" aria-hidden="true"></i>
                                 </button>
                                 <input type="text" class="form-control" placeholder="<%=i18n.localize("search.label")%>..." />
@@ -257,7 +257,7 @@
                         <div class="add-padding-3x">
 
                             <div class="form-group has-form-control-btn ues-search-box">
-                                <button class="form-control-btn" type="button" title="Search">
+                                <button class="form-control-btn" type="button" title="查询">
                                     <i class="fw fw-search" aria-hidden="true"></i>
                                 </button>
                                 <input type="text" class="form-control" placeholder="<%=i18n.localize("search.label")%>..." />
@@ -280,7 +280,7 @@
                         data-target="#left-sidebar-sub" aria-expanded="true" rel="createPage"><i class="fw fw-cancel"></i></button>
 
                     <div class="add-padding-3x">
-                        <%=i18n.localize("select.layout")%>
+                        <%=i18n.localize("select.layout")%>12112
                         <hr />
                         <div id="ues-page-layouts"></div>
                     </div>

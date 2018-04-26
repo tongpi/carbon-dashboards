@@ -723,7 +723,7 @@ body.inverse .fade-edge:after {
  * header styles
  * ======================================================================== */
 header {
-  background: #024675;
+  background: #2d313a;
   min-height: 50px;
   position: relative;
 }
@@ -802,7 +802,7 @@ header .dropdown[aria-expanded=true], header .dropdown:hover {
 }
 
 .navbar {
-  background: #2a80b9;
+  background: #1e252d;
   border: none;
   margin-bottom: 0;
   -webkit-border-radius: 0;
@@ -854,17 +854,17 @@ header .dropdown[aria-expanded=true], header .dropdown:hover {
   padding: 0 8px;
   line-height: 50px;
   font-size: 18px;
-  background: #007D85;
+  background: #02c2c5;
   color: #ffffff;
 }
 
 .navbar-menu-toggle:hover, .navbar-menu-toggle:focus, .navbar-menu-toggle:active {
   color: #ffffff;
-  background: #004d52;
+  background: #02c2c5;
 }
 
 .navbar-menu-toggle[aria-expanded=true] {
-  background: #00575c;
+  background: #02c2c5;
 }
 
 .navbar-toggle {
@@ -911,7 +911,7 @@ header .dropdown[aria-expanded=true], header .dropdown:hover {
 }
 
 .navbar-default .navbar-nav > li a:hover {
-  background: #429ad4;
+  background: #1e252d;
 }
 
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:active {
@@ -924,7 +924,7 @@ header .dropdown[aria-expanded=true], header .dropdown:hover {
 }
 
 .navbar-collapse.dropdown {
-  background: #222;
+  background: #2c323b;
   margin-right: -10px;
   margin-left: -10px;
   padding-bottom: 0;
@@ -956,7 +956,7 @@ header .dropdown[aria-expanded=true], header .dropdown:hover {
   width: 120px;
   height: 120px;
   padding: 15px;
-  background: #444;
+  background: #474f5a;
   display: block;
   overflow: hidden;
   line-height: 1.4em;
@@ -967,7 +967,7 @@ header .dropdown[aria-expanded=true], header .dropdown:hover {
 }
 
 .navbar-collapse.tiles ul.nav li a:hover {
-  background: #555;
+  background: #2c323b;
 }
 
 .navbar-collapse.tiles ul.nav li li a:hover {
@@ -1229,10 +1229,11 @@ ul.sidebar-messages > li {
   margin: 0;
   overflow: hidden;
   text-transform: uppercase;
-  background: #282828;
-  color: #ffffff;
+  background: #2d313a;
+  color: #a3abbe;
   min-height: 30px;
   padding: 5px 15px;
+  border-top:1px solid #474f5a;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
@@ -1245,7 +1246,9 @@ ul.sidebar-messages > li {
 .breadcrumb > li > a > .icon {
   padding-bottom: 3px;
 }
-
+.breadcrumb>.active{
+   color: #a3abbe;
+}
 /* ========================================================================
  * footer styles
  * ======================================================================== */
@@ -1256,7 +1259,7 @@ footer {
   min-height: 40px;
   overflow: hidden;
   color: #cbcbcb;
-  background: #272c30;
+  background: #2d313a;
   z-index: 1000;
 }
 

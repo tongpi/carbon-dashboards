@@ -130,7 +130,7 @@ class DashboardCard extends Component {
 
         return (
             <Dialog
-                title={`Do you want to delete dashboard '${dashboard.name}'?`}
+                title={`你确信要删除仪表板 '${dashboard.name}'?`}
                 actions={actionsButtons}
                 open={this.state.isDashboardDeleteConfirmDialogOpen}
                 modal={false}
@@ -144,7 +144,7 @@ class DashboardCard extends Component {
     renderDashboardDeletionSuccessMessage(dashboard) {
         return (<Snackbar
             open
-            message={`Dashboard '${dashboard.name}' deleted successfully`}
+            message={`仪表板 '${dashboard.name}' 删除成功！`}
             autoHideDuration={4000}
         />);
     }
@@ -152,7 +152,7 @@ class DashboardCard extends Component {
     renderDashboardDeletionFailMessage(dashboard) {
         return (<Snackbar
             open={this.state.dashboardDeleteActionResult === 'fail'}
-            message={`Cannot delete dashboard '${dashboard.name}'`}
+            message={`不能删除仪表板 '${dashboard.name}'`}
             autoHideDuration={4000}
             onRequestClose={() => this.setState({ dashboardDeleteActionResult: null })}
         />);

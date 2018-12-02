@@ -33,9 +33,9 @@ class CustomersPerYear extends Widget {
         ];
 
         this.lineConfig = {
-            x: 'Year',
-            charts: [{type: 'line', y: 'Downloads', fill: '#00e1d6', style: {strokeWidth: 2, markRadius: 5}},
-                {type: 'line', y: 'Customers', fill: '#ff2e4e', style: {strokeWidth: 2, markRadius: 5}}],
+            x: '年度',
+            charts: [{type: 'line', y: '下载量', fill: '#00e1d6', style: {strokeWidth: 2, markRadius: 5}},
+                {type: 'line', y: '客户数', fill: '#ff2e4e', style: {strokeWidth: 2, markRadius: 5}}],
             width: this.props.glContainer.width,
             height: this.props.glContainer.height,
             legend: true,
@@ -89,7 +89,7 @@ class CustomersPerYear extends Widget {
         ];
 
         this.metadata = {
-            names: ['Year', 'Region', 'Revenue', 'Downloads', 'Customers'],
+            names: ['年度', '地区', '收入', '下载量', '客户数'],
             types: ['ordinal', 'ordinal', 'linear', 'linear', 'linear']
         };
 

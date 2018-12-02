@@ -47,10 +47,10 @@ class Subscriber extends Widget {
         const messages = this.state.messages;
         if (messages.length > 0) {
             return messages.map(message => {
-                return <div>[Received] {message.time.toTimeString()} [Message] - {message.value}</div>;
+                return <div>[接收于] {message.time.toTimeString()} [消息] - {message.value}</div>;
             });
         } else {
-            return <div>No messages!</div>;
+            return <div>无消息!</div>;
         }
     }
 
@@ -63,11 +63,11 @@ class Subscriber extends Widget {
             <MuiThemeProvider
                 muiTheme={getMuiTheme(darkBaseTheme)}
             >
-                <section style={{marginTop: 25}}><h3 style={{display: 'inline', marginRight: 10}}>Received Messages</h3>
+                <section style={{marginTop: 25}}><h3 style={{display: 'inline', marginRight: 10}}>收到的消息</h3>
                     <FlatButton
                         backgroundColor={'#d3240b'}
                         hoverColor={'#86170b'}
-                        label={"Clear"}
+                        label={"清除"}
                         onClick={this.clearMsgs}
                         style={{
                             marginLeft: 5

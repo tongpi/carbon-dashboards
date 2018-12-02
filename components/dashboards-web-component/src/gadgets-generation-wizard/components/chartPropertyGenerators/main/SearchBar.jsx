@@ -51,7 +51,7 @@ class SearchBar extends Component {
                 <StreamProperty
                     id="column"
                     value={this.state.configuration.charts[0].column}
-                    fieldName="Column name*"
+                    fieldName="列名*"
                     onChange={(id, value) => this.handleChartPropertyChange(id, value)}
                     metadata={this.props.metadata}
                     fullWidth
@@ -61,7 +61,7 @@ class SearchBar extends Component {
                 <SwitchProperty
                     id="selectMultiple"
                     value={this.state.configuration.charts[0].selectMultiple}
-                    fieldName="Select Multiple"
+                    fieldName="多选"
                     onChange={(id, value) => this.handleChartPropertyChange(id, value)}
                 />
                 <br />

@@ -258,7 +258,7 @@ class ChartConfigurator extends Component {
             <div>
                 <div style={{ margin: 10, fontFamily: 'Roboto, sans-serif', color: 'white' }}>
                     <SelectField
-                        floatingLabelText='Select a chart type & configure its properties'
+                        floatingLabelText='选择图标类型并配置属性'
                         value={this.state.chartType}
                         onChange={(e, i, v) => this.handleChartTypeChange(v)}
                         fullWidth
@@ -306,7 +306,7 @@ class ChartConfigurator extends Component {
                     <br />
                     {(this.state.chartType !== '') ?
                         (<RaisedButton
-                            label="Preview"
+                            label="预览"
                             labelPosition="before"
                             primary
                             icon={<PollIcon />}

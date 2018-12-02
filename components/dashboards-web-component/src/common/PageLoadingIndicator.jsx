@@ -64,5 +64,5 @@ PageLoadingIndicator.propTypes = {
 };
 
 PageLoadingIndicator.defaultProps = {
-    title: 'Loading ...',
+    title: '正在加载 ...',
 };

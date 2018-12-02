@@ -65,8 +65,8 @@ class RevenueByCountry extends Widget {
         };
 
         this.mapConfig = {
-            x: 'Country',
-            charts: [{type: 'map', y: 'Revenue', mapType: 'world', colorScale: ['#ccc', '#0082ea']}],
+            x: '国家',
+            charts: [{type: 'map', y: '收入', mapType: 'world', colorScale: ['#ccc', '#0082ea']}],
             width: this.state.width,
             height: this.state.height,
             style: {
@@ -76,7 +76,7 @@ class RevenueByCountry extends Widget {
         };
 
         this.metadata = {
-            names: ['Country', 'Country Code', 'Region', 'Revenue', 'Orders', 'Customers'],
+            names: ['国家', '国家代码', '地区', '收入', '订单数', '客户数'],
             types: ['ordinal', 'ordinal', 'ordinal', 'linear', 'linear', 'linear']
         };
 

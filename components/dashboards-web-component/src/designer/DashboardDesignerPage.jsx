@@ -77,11 +77,11 @@ export default class DashboardDesignerPage extends Component {
         return new Promise((resolve, reject) => {
             new DashboardAPI('designer').updateDashboardByID(this.dashboard.url, this.dashboard)
                 .then(() => {
-                    this.setState({ dashboardUpdateResultMessage: `${this.dashboard.name} updated successfully.` });
+                    this.setState({ dashboardUpdateResultMessage: `${this.dashboard.name} 更新成功.` });
                     resolve();
                 })
                 .catch(() => {
-                    this.setState({ dashboardUpdateResultMessage: `Cannot update ${this.dashboard.name}!` });
+                    this.setState({ dashboardUpdateResultMessage: `不能更新 ${this.dashboard.name}!` });
                     reject();
                 });
         });

@@ -166,7 +166,7 @@ class GadgetsGenerationWizard extends Component {
                 });
             }
         }).catch(() => {
-            this.displaySnackbar('Failed to load provider configurations', 'errorMessage');
+            this.displaySnackbar('加载提供者配置失败', 'errorMessage');
         });
     }
 
@@ -238,16 +238,16 @@ class GadgetsGenerationWizard extends Component {
             const apis = new GadgetsGenerationAPI();
             apis.addGadgetConfiguration(JSON.stringify(submitTableConfig)).then((response) => {
                 if (response.status === 201) {
-                    this.displaySnackbar(`Widget ${this.state.gadgetDetails.name} was created successfully!`,
+                    this.displaySnackbar(`小部件 ${this.state.gadgetDetails.name} 创建成功!`,
                         'successMessage');
                     setTimeout(() => {
                         this.props.history.push('/');
                     }, 1000);
                 } else {
-                    this.displaySnackbar('Failed to save the widget', 'errorMessage');
+                    this.displaySnackbar('小部件保存失败', 'errorMessage');
                 }
             }).catch(() => {
-                this.displaySnackbar('Failed to save the widget', 'errorMessage');
+                this.displaySnackbar('小部件保存失败', 'errorMessage');
             });
         }
     }
@@ -318,16 +318,16 @@ class GadgetsGenerationWizard extends Component {
                     }).catch((error) => {
                         if (error.response) {
                             if (error.response.status === 409) {
-                                this.displaySnackbar('The widget name already exists', 'errorMessage');
+                                this.displaySnackbar('同名小部件已存在', 'errorMessage');
                             } else {
-                                this.displaySnackbar('Unable to proceed to the next step', 'errorMessage');
+                                this.displaySnackbar('不能进入下一步', 'errorMessage');
                             }
                         } else {
-                            this.displaySnackbar('Unable to process your request', 'errorMessage');
+                            this.displaySnackbar('不能处理你的请求', 'errorMessage');
                         }
                     });
                 } else {
-                    this.displaySnackbar('Widget name can not be empty', 'errorMessage');
+                    this.displaySnackbar('小部件名称不能为空', 'errorMessage');
                 }
                 break;
             case (1):
@@ -365,26 +365,26 @@ class GadgetsGenerationWizard extends Component {
                         });
                     }
                 } else {
-                    this.displaySnackbar('Please select a data provider and configure details', 'errorMessage');
+                    this.displaySnackbar('请选择一个数据提供者并对其仔细配置', 'errorMessage');
                 }
                 break;
             case (2):
                 this.submitGadgetConfig();
                 break;
             default:
-                this.displaySnackbar('Invalid step', 'errorMessage');
+                this.displaySnackbar('该步无效', 'errorMessage');
         }
     }
 
     validateProviderConfiguration(providerConfig) {
         if (providerConfig.queryData.queryFunctionImpl === '') {
-            this.displaySnackbar('Please fill Javascript code segment to generate the query for data retrieving',
+            this.displaySnackbar('请输入Javascript代码片段生成查询来提取数据',
                 'errorMessage');
             return false;
         }
         for (const key in providerConfig) {
             if (key !== 'timeColumns' && providerConfig[key] === '') {
-                this.displaySnackbar('Please fill the required field \'' + key + '\' for a valid configuration',
+                this.displaySnackbar('请以有效的信息填写必填字段 \'' + key + '\' ',
                     'errorMessage');
                 return false;
             }
@@ -438,7 +438,7 @@ class GadgetsGenerationWizard extends Component {
                     />
                 );
             default:
-                return 'Invalid step';
+                return '该步无效';
         }
     }
 
@@ -447,7 +447,7 @@ class GadgetsGenerationWizard extends Component {
             case 0:
                 return (
                     <RaisedButton
-                        label="Next"
+                        label="下一步"
                         primary
                         style={{ marginRight: 12 }}
                         onClick={this.handleNext}
@@ -456,7 +456,7 @@ class GadgetsGenerationWizard extends Component {
             case 1:
                 return (
                     <RaisedButton
-                        label="Next"
+                        label="下一步"
                         primary
                         style={{ marginRight: 12 }}
                         onClick={this.handleNext}
@@ -465,7 +465,7 @@ class GadgetsGenerationWizard extends Component {
             case 2:
                 return (
                     <RaisedButton
-                        label="Create"
+                        label="创建"
                         primary
                         style={{ marginRight: 12 }}
                         onClick={() => this.submitGadgetConfig()}
@@ -503,15 +503,15 @@ class GadgetsGenerationWizard extends Component {
                 <div>{this.getStepContent(stepIndex)}</div>
                 <div style={{ marginTop: 24, marginBottom: 12 }}>
                     <FlatButton
-                        label="Back"
+                        label="后退"
                         disabled={stepIndex === 0}
                         onClick={this.handlePrev}
                         style={{ marginRight: 12 }}
                     />
                     {this.renderNextButton(stepIndex)}
                     <FlatButton
-                        label="Cancel"
-                        onClick={this.props.history.goBack}
+                        label="取消"
+                        onClick={() => this.props.history.push('/')}
                         style={{ marginRight: 12 }}
                     />
                 </div>
@@ -586,21 +586,21 @@ class GadgetsGenerationWizard extends Component {
                                     <StepLabel
                                         style={this.getStepperTextStyle(stepIndex, 0)}
                                     >
-                                        Enter widget name
+                                        输入小部件名称
                                     </StepLabel>
                                 </Step>
                                 <Step>
                                     <StepLabel
                                         style={this.getStepperTextStyle(stepIndex, 1)}
                                     >
-                                        Configure data provider
+                                        配置数据提供者
                                     </StepLabel>
                                 </Step>
                                 <Step>
                                     <StepLabel
                                         style={this.getStepperTextStyle(stepIndex, 2)}
                                     >
-                                        Configure chart
+                                        配置图表
                                     </StepLabel>
                                 </Step>
                             </Stepper>

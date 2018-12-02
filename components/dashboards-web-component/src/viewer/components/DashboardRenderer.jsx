@@ -185,7 +185,7 @@ export default class DashboardRenderer extends Component {
 
     onGoldenLayoutComponentCreateEvent(component) {
         const exportButton = document.createElement('i');
-        exportButton.title = 'Generate Report';
+        exportButton.title = '生成报表';
         exportButton.className = 'fw fw-export widget-report-generation-button';
         exportButton.addEventListener('click', () => {
             DashboardReportGenerator.generateWidgetPdf(component.element[0], component.config.title, true, true,
@@ -201,7 +201,7 @@ export default class DashboardRenderer extends Component {
     renderReportGenerationErrorSnackBar() {
         return (
             <Snackbar
-                message={'Error occured while capturing the widget snapshot'}
+                message={'捕获小部件快照是出错'}
                 open={this.state.showWidgetReportGenerationError}
                 autoHideDuration="4000"
                 onRequestClose={() => this.setState({ showWidgetReportGenerationError: false })}

@@ -25,17 +25,17 @@ class CustomersByProduct extends Widget {
     constructor(props) {
         super(props);
         this.totalPerProduct = [
-            ['Analytics', 500, 301],
-            ['APIManager', 564, 321],
+            ['分析服务', 500, 301],
+            ['API管理器', 564, 321],
             ['ESB', 412, 243],
-            ['IdentityServer', 234, 136],
-            ['IOTServer', 14, 8]
+            ['身份服务', 234, 136],
+            ['物联网', 14, 8]
         ];
 
         this.stackedBarChartConfig = {
-            x: 'Product',
-            charts: [{type: 'bar', y: 'Downloads'},
-                {type: 'bar', y: 'Customers'}],
+            x: '产品',
+            charts: [{type: 'bar', y: '下载量', fill: '#4659f9'},
+                {type: 'bar', y: '客户数', fill: '#00b7ee'}],
             maxLength: 6,
             width: this.props.glContainer.width,
             height: this.props.glContainer.height,
@@ -52,64 +52,64 @@ class CustomersByProduct extends Widget {
         };
 
         this.metadata = {
-            names: ['Product', 'Downloads', 'Customers'],
+            names: ['产品', '下载量', '客户数'],
             types: ['ordinal', 'linear', 'linear']
         };
 
         this.africaData = [
-            ["Analytics", 6, 3],
-            ["APIManager", 12, 7],
+            ["分析服务", 6, 3],
+            ["API管理器", 12, 7],
             ["ESB", 10, 6],
-            ['IdentityServer', 0, 0],
-            ['IOTServer', 0, 0]
+            ['身份服务', 0, 0],
+            ['物联网', 0, 0]
         ];
 
         this.asiaData = [
-            ['Analytics', 100, 54],
-            ['APIManager', 90, 57],
+            ['分析服务', 100, 54],
+            ['API管理器', 90, 57],
             ['ESB', 88, 51],
-            ['IdentityServer', 0, 0],
-            ['IOTServer', 0, 0]
+            ['身份服务', 0, 0],
+            ['物联网', 0, 0]
         ];
 
         this.europeData = [
-            ['Analytics', 292, 181],
-            ['APIManager', 310, 172],
+            ['分析服务', 292, 181],
+            ['API管理器', 310, 172],
             ['ESB', 175, 114],
-            ['IdentityServer', 84, 43],
-            ['IOTServer', 0, 0]
+            ['身份服务', 84, 43],
+            ['物联网', 0, 0]
         ];
 
         this.latAmData = [
-            ['Analytics', 39, 23],
-            ['APIManager', 32, 16],
+            ['分析服务', 39, 23],
+            ['API管理器', 32, 16],
             ['ESB', 33, 15],
-            ['IdentityServer', 0, 0],
-            ['IOTServer', 0, 0]
+            ['身份服务', 0, 0],
+            ['物联网', 0, 0]
         ];
 
         this.midEastData = [
-            ['Analytics', 13, 9],
-            ['APIManager', 31, 15],
+            ['分析服务', 13, 9],
+            ['API管理器', 31, 15],
             ['ESB', 51, 26],
-            ['IdentityServer', 95, 64],
-            ['IOTServer', 14, 8],
+            ['身份服务', 95, 64],
+            ['物联网', 14, 8],
         ];
 
         this.northAmData = [
-            ['Analytics', 37, 23],
-            ['APIManager', 70, 44],
+            ['分析服务', 37, 23],
+            ['API管理器', 70, 44],
             ['ESB', 40, 24],
-            ['IdentityServer', 30, 12],
-            ['IOTServer', 0, 0]
+            ['身份服务', 30, 12],
+            ['物联网', 0, 0]
         ];
 
         this.rowData = [
-            ["Analytics", 13, 8],
-            ["APIManager", 19, 10],
+            ["分析服务", 13, 8],
+            ["API管理器", 19, 10],
             ["ESB", 15, 7],
-            ["IdentityServer", 25, 17],
-            ['IOTServer', 0, 0]
+            ["身份服务", 25, 17],
+            ['物联网', 0, 0]
 
         ];
 

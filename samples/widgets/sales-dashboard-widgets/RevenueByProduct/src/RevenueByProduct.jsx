@@ -78,13 +78,13 @@ class RevenueByProduct extends Widget {
         };
 
         this.metadata = {
-            names: ['Country', 'Country Code', 'Region', 'Product', 'Revenue', 'Downloads', 'Customers'],
+            names: ['国家', '国家代码', '地区', '产品', '收入', '下载量', '客户数'],
             types: ['ordinal', 'ordinal', 'ordinal', 'ordinal', 'linear', 'linear', 'linear']
         };
 
         this.barChartConfig = {
-            x: 'Product',
-            charts: [{type: 'bar', y: 'Revenue'}],
+            x: '产品',
+            charts: [{type: 'bar', y: '收入', fill: '#10c469'}],
             maxLength: 5,
             width: props.glContainer.width,
             height: props.glContainer.height,

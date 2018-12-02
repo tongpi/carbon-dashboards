@@ -233,7 +233,7 @@ class DynamicQueryComponent extends Component {
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
                 <Card style={dynamicQueryCardStyle}>
-                    <h3>Dynamic Query Generation Configuration</h3>
+                    <h3>动态查询生成配置</h3>
                     <Divider/>
                     <CardMedia>
                         <div style={{marginTop: 15}}>
@@ -266,8 +266,8 @@ class DynamicQueryComponent extends Component {
                                     <Table onRowSelection={this.handleRowSelection}>
                                         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                                             <TableRow>
-                                                <TableHeaderColumn>Input Name</TableHeaderColumn>
-                                                <TableHeaderColumn>Default Value</TableHeaderColumn>
+                                                <TableHeaderColumn>输入名称</TableHeaderColumn>
+                                                <TableHeaderColumn>缺省值</TableHeaderColumn>
                                             </TableRow>
                                         </TableHeader>
                                         <TableBody displayRowCheckbox={false} deselectOnClickaway={false}>
@@ -301,7 +301,7 @@ class DynamicQueryComponent extends Component {
 
                         </div>
                         <div style={queryEditorPaneStyle}>
-                            Enter your JS function to create the query
+                            请输入JS函数以便创建查询
                         </div>
                         <div>{queryFunction}</div>
                         <CodeProperty

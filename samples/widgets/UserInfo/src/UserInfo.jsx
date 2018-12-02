@@ -47,8 +47,8 @@ class UserInfo extends Widget {
         const user = super.getCurrentUser();
         return (
             <div style={styles.container}>
-                <h3>User Information</h3>
-                <p style={{fontSize: '1.8em'}}><strong>Username: </strong>{user.username}</p>
+                <h3>用户信息</h3>
+                <p style={{fontSize: '1.8em'}}><strong>用户名: </strong>{user.username}</p>
             </div>
         );
     }

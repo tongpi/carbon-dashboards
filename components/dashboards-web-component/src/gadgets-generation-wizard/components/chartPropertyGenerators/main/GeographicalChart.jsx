@@ -109,7 +109,7 @@ class Geographical extends Component {
                 <StreamProperty
                     id="x"
                     value={this.state.configuration.x}
-                    fieldName="Field values to be plotted in the choropleth*"
+                    fieldName="要在等值区域中绘制的字段值*"
                     filter={Types.dataset.metadata.ordinal}
                     onChange={(id, value) => this.handleMainPropertyChange(id, value)}
                     metadata={this.props.metadata}
@@ -119,7 +119,7 @@ class Geographical extends Component {
                 <StreamProperty
                     id="y"
                     value={this.state.configuration.charts[0].y}
-                    fieldName="Field values to be plotted in the map*"
+                    fieldName="要在地图中绘制的字段值*"
                     filter={[Types.dataset.metadata.ordinal, Types.dataset.metadata.linear]}
                     onChange={(id, value) => this.handleSubChartPropertyChange(id, value)}
                     metadata={this.props.metadata}
@@ -129,7 +129,7 @@ class Geographical extends Component {
                 <SelectProperty
                     id="mapType"
                     value={this.props.configuration.charts[0].mapType}
-                    fieldName="Type of the map*"
+                    fieldName="地图类型*"
                     onChange={(id, value) => this.handleSubChartPropertyChange(id, value)}
                     options={{
                         values: [Types.chart.world, Types.chart.europe, Types.chart.usa],
@@ -142,7 +142,7 @@ class Geographical extends Component {
                 <ColorProperty
                     id="legendTitleColor"
                     value={this.state.configuration.legendTitleColor}
-                    fieldName="Color of the legend title"
+                    fieldName="图例标题颜色"
                     onChange={(id, value) => this.handleMainPropertyChange(id, value)}
                     fullWidth
                 />
@@ -150,21 +150,21 @@ class Geographical extends Component {
                 <ColorProperty
                     id="legendTextColor"
                     value={this.state.configuration.legendTextColor}
-                    fieldName="Color of the legend text"
+                    fieldName="图例文本颜色"
                     onChange={(id, value) => this.handleMainPropertyChange(id, value)}
                     fullWidth
                 />
                 <br />
                 <br />
                 <br />
-                <a>Color set to use in the charts</a>
+                <a>图表要使用的颜色集/a>
                 {(this.props.configuration.charts[0].colorScale.length === 0) ?
                     (
                         <a>
                             &nbsp; &nbsp;
                             <FlatButton
                                 primary
-                                label="Default"
+                                label="缺省"
                                 onClick={() => this.addColorScaleMember()}
                             />
                         </a>

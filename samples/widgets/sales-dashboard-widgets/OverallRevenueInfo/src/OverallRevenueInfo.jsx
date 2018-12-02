@@ -159,8 +159,8 @@ class OverallRevenueInfo extends Widget {
         this.configPie = {
             charts: [{
                 type: 'arc',
-                x: 'Revenue',
-                color: 'Product',
+                x: '收入',
+                color: '产品',
                 mode: 'pie',
                 colorScale: ['#3366cc', '#4DB6AC ', '#ff9900', '#109618', '#990099']
             }],
@@ -172,7 +172,7 @@ class OverallRevenueInfo extends Widget {
 
 
         this.metadata = {
-            names: ['Country', 'Country Code', 'Region', 'Product', 'Revenue', 'Downloads', 'Customers'],
+            names: ['国家', '国家代码', '地区', '产品', '收入', '下载量', '客户数'],
             types: ['ordinal', 'ordinal', 'ordinal', 'ordinal', 'linear', 'linear', 'linear']
         };
 

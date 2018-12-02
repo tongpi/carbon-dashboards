@@ -66,7 +66,7 @@ class WidgetState extends Widget {
         // Syntax: super.getWidgetState(<KEY>)
         let message = super.getWidgetState('message');
         let labelText = message && message != null && message !== ''  ?
-            'Persisted message found: ' + message : 'No persisted state found';
+            '持久化消息发现: ' + message : '非持久化状态发现';
 
         return (
 
@@ -88,7 +88,7 @@ class WidgetState extends Widget {
         // Syntax: super.setWidgetState(<KEY>, <VALUE>)
         let message = document.getElementById('txtMessage').value;
         super.setWidgetState('message', message);
-        alert('State persisted successfully!');
+        alert('状态持久化成功!');
         this.forceUpdate();
     }
 

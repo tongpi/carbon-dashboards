@@ -58,7 +58,7 @@ export default class MetaDataCollector extends React.Component {
             <div>
                 <br />
                 <br />
-                Metadata related to the stream
+                与流相关的元数据
                 <Table>
                     <TableBody displayRowCheckbox={false}>
                         {metadata && metadata.names.map((name, metaIndex) =>

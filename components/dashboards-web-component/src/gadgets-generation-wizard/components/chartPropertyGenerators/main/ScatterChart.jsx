@@ -180,7 +180,7 @@ class Scatter extends Component {
                             removeChart={() => this.removeSubChart(index)}
                         />))}
                     <FlatButton
-                        label="Add Chart"
+                        label="添加图表"
                         onClick={() => this.addSubChart(Types.chart.scatterChart)}
                         primary
                     />
@@ -195,7 +195,7 @@ class Scatter extends Component {
                     onExpandChange={e => this.setState({ expandAdvanced: e })}
                 >
                     <CardHeader
-                        title="Advanced Settings"
+                        title="高级设置"
                         actAsExpander
                         showExpandableButton
                     />
@@ -207,7 +207,7 @@ class Scatter extends Component {
                         <SwitchProperty
                             id="append"
                             value={this.state.configuration.append}
-                            fieldName="Append new data to the chart"
+                            fieldName="添加新数据到图表"
                             onChange={(id, value) => this.handleMainChartPropertyChange(id, value)}
                         />
                         <br />
@@ -215,7 +215,7 @@ class Scatter extends Component {
                         <TextProperty
                             id="xAxisLabel"
                             value={this.state.configuration.xAxisLabel}
-                            fieldName="Label to be displayed in the x axis"
+                            fieldName="X轴的标签"
                             onChange={(id, value) => this.handleMainChartPropertyChange(id, value)}
                             fullWidth
                         />
@@ -223,7 +223,7 @@ class Scatter extends Component {
                         <TextProperty
                             id="yAxisLabel"
                             value={this.state.configuration.yAxisLabel}
-                            fieldName="Label to be displayed in the y axis"
+                            fieldName="Y轴的标签"
                             onChange={(id, value) => this.handleMainChartPropertyChange(id, value)}
                             fullWidth
                         />
@@ -233,7 +233,7 @@ class Scatter extends Component {
                         <SwitchProperty
                             id="disableVerticalGrid"
                             value={this.state.configuration.disableVerticalGrid}
-                            fieldName="Disable vertical grid lines in the chart"
+                            fieldName="图表上显示垂直网格线"
                             onChange={(id, value) => this.handleMainChartPropertyChange(id, value)}
                         />
                         <br />
@@ -241,25 +241,25 @@ class Scatter extends Component {
                         <SwitchProperty
                             id="disableHorizontalGrid"
                             value={this.state.configuration.disableHorizontalGrid}
-                            fieldName="Disable horizontal grid lines in the chart"
+                            fieldName="图表上显示水平网格线"
                             onChange={(id, value) => this.handleMainChartPropertyChange(id, value)}
                         />
                         <TextProperty
                             id="timeFormat"
                             value={this.state.configuration.timeFormat}
-                            fieldName="Time formatting regex of any time series reference"
+                            fieldName="任意时间序列值参考的正则表达式格式"
                             onChange={(id, value) => this.handleMainChartPropertyChange(id, value)}
                             fullWidth
                         />
-                        <a>(Refer : https://github.com/d3/d3-time-format/blob/master/README.md#locale_format)</a>
+                        <a>(参见 : https://github.com/d3/d3-time-format/blob/master/README.md#locale_format)</a>
                         <br />
                         <SelectProperty
                             id="legendOrientation"
                             value={this.state.configuration.legendOrientation}
-                            fieldName="Orientation of the legend relative to the chart"
+                            fieldName="相对于图表的图例位置"
                             options={{
                                 values: ['top', 'bottom', 'left', 'right'],
-                                texts: ['Top', 'Bottom', 'Left', 'Right'],
+                                texts: ['上方', '下方', '左边', '右边'],
                             }}
                             onChange={(id, value) => this.handleMainChartPropertyChange(id, value)}
                             fullWidth
@@ -268,7 +268,7 @@ class Scatter extends Component {
                         <TextProperty
                             id="xAxisTickCount"
                             value={this.state.configuration.xAxisTickCount}
-                            fieldName="Specify number of ticks in the x axis"
+                            fieldName="X轴刻度个数"
                             onChange={(id, value) => this.handleMainChartPropertyChange(id, value)}
                             number
                             fullWidth
@@ -277,7 +277,7 @@ class Scatter extends Component {
                         <TextProperty
                             id="yAxisTickCount"
                             value={this.state.configuration.yAxisTickCount}
-                            fieldName="Specify number of ticks in the y axis"
+                            fieldName="Y轴的刻度个数"
                             onChange={(id, value) => this.handleMainChartPropertyChange(id, value)}
                             number
                             fullWidth
@@ -288,7 +288,7 @@ class Scatter extends Component {
                         <ColorProperty
                             id="axisLabelColor"
                             value={this.state.configuration.style.axisLabelColor}
-                            fieldName="Color of the axis labels & tick labels in the axis"
+                            fieldName="X轴标签和刻度标签的颜色"
                             onChange={(id, value) => this.handleMainChartStylePropertyChange(id, value)}
                             fullWidth
                         />
@@ -296,7 +296,7 @@ class Scatter extends Component {
                         <ColorProperty
                             id="legendTitleColor"
                             value={this.state.configuration.style.legendTitleColor}
-                            fieldName="Text color of the legend title"
+                            fieldName="图例标题色"
                             onChange={(id, value) => this.handleMainChartStylePropertyChange(id, value)}
                             fullWidth
                         />
@@ -304,7 +304,7 @@ class Scatter extends Component {
                         <ColorProperty
                             id="legendTextColor"
                             value={this.state.configuration.style.legendTextColor}
-                            fieldName="Text color of the text in the legend"
+                            fieldName="图例文本色"
                             onChange={(id, value) => this.handleMainChartStylePropertyChange(id, value)}
                             fullWidth
                         />
@@ -312,7 +312,7 @@ class Scatter extends Component {
                         <TextProperty
                             id="xAxisTickAngle"
                             value={this.state.configuration.style.xAxisTickAngle}
-                            fieldName="Angle of the x axis ticks"
+                            fieldName="X轴刻度的角度"
                             number
                             onChange={(id, value) => this.handleMainChartStylePropertyChange(id, value)}
                             fullWidth
@@ -321,7 +321,7 @@ class Scatter extends Component {
                         <TextProperty
                             id="yAxisTickAngle"
                             value={this.state.configuration.style.yAxisTickAngle}
-                            fieldName="Angle of the y axis ticks"
+                            fieldName="Y轴刻度的角度"
                             number
                             onChange={(id, value) => this.handleMainChartStylePropertyChange(id, value)}
                             fullWidth

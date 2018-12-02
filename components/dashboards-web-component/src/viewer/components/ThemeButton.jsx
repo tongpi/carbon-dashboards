@@ -31,7 +31,7 @@ class ThemeButton extends Component {
             <IconButton
                 style={{ color: '#fff', position: 'absolute', left: -40, }}
                 onClick={this.props.onThemeButtonClick}
-                title="Toggle Light/Dark theme"
+                title="切换亮色/暗色主题"
             >
                 {this.props.theme.name === 'dark' ? <LightBulbFillIcon /> : <LightBulbOutlineIcon />}
             </IconButton>

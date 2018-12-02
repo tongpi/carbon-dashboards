@@ -83,10 +83,10 @@ export default class DashboardReportGenerator {
             DashboardReportGenerator.addPdfConfigs(pdf, null, widgetName, 'table', 'portrait', false);
 
             // Page numbers
-            let pageNumber = 'Page ' + data.pageCount;
+            let pageNumber = '第 ' + data.pageCount + ' 页';
             // Total page number plugin only available in Jspdf v1.0+
             if (typeof (pdf.putTotalPages) === 'function') {
-                pageNumber = pageNumber + ' of ' + totalPagesExp;
+                pageNumber = pageNumber + ' 共 ' + totalPagesExp +' 页';
             }
             pdf.setFontSize(12);
             const pageHeight = pdf.internal.pageSize.getHeight();
@@ -256,9 +256,9 @@ export default class DashboardReportGenerator {
 
         if (includeTime) {
             if (timestamp) {
-                pdfInfo = 'Generated on : ' + DateFormat(timestamp, 'dd/mm/yyyy, h:MM TT');
+                pdfInfo = '制表时间 : ' + DateFormat(timestamp, 'yyyy-mm-dd, h:MM TT');
             } else {
-                pdfInfo = 'Generated on : ' + DateFormat(new Date(), 'dd/mm/yyyy, h:MM TT');
+                pdfInfo = '制表时间 : ' + DateFormat(new Date(), 'yyyy-mm-dd, h:MM TT');
             }
         }
 
@@ -266,7 +266,7 @@ export default class DashboardReportGenerator {
         pdf.text(pdfInfo, xCoordinate, pdfConfig.pdfSubtitle.coordinates.y);
 
         if (includeRecords) {
-            pdfInfo = 'No of records : ' + recordCount;
+            pdfInfo = '记录数 : ' + recordCount;
             xCoordinate = DashboardReportGenerator.getTextAlignmentXCoordinate(pdf, pdfInfo, 'right');
             pdf.text(pdfInfo, xCoordinate, pdfConfig.pdfSubtitle.coordinates.y + pdf.internal.getLineHeight());
         }
@@ -493,7 +493,7 @@ export default class DashboardReportGenerator {
      * @param {int} pageIndex index of the page the number should be added
      */
     static addPageNumber(pdf, page, dashboardPages, pageIndex) {
-        const pageNo = 'Page ' + (pageIndex + 1) + ' of ' + dashboardPages.length;
+        const pageNo = '第 ' + (pageIndex + 1) + '页 共 ' + dashboardPages.length + '页';
         pdf.setFontSize(10);
         const pageHeight = pdf.internal.pageSize.height || pdf.internal.pageSize.getHeight();
         pdf.text(pageNo, 10, pageHeight - 10);

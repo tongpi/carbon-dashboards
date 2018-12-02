@@ -52,17 +52,17 @@ class Publisher extends Widget {
     }
 
     componentDidMount() {
-        super.publish("Initial Message");
+        super.publish("初始消息");
     }
 
     getPublishedMsgsOutput() {
         const messages = this.state.publishedMessages;
         if (messages.length > 0) {
             return messages.map(message => {
-                return <div>[Sent] {message.time.toTimeString()} [Message] - {message.value}</div>;
+                return <div>[发送于] {message.time.toTimeString()} [消息] - {message.value}</div>;
             });
         } else {
-            return <div>No messages!</div>;
+            return <div>无消息!</div>;
         }
     }
 
@@ -86,7 +86,7 @@ class Publisher extends Widget {
                     <div style={{overflow: 'hidden'}}>
                         <div style={{width: '100%', paddingRight: 10, paddingLeft: 10 }}>
                             <TextField
-                                hintText="Hint Text"
+                                hintText="提示信息"
                                 fullWidth
                                 value={this.state.currentMessage}
                                 onChange={event => this.setState({currentMessage: event.target.value})}
@@ -96,13 +96,13 @@ class Publisher extends Widget {
                             <FlatButton
                                 backgroundColor={'#1d85d3'}
                                 hoverColor={'#1a619d'}
-                                label={"Publish"}
+                                label={"发布"}
                                 onClick={this.publishMsg}
                             />
                             <FlatButton
                                 backgroundColor={'#d3240b'}
                                 hoverColor={'#86170b'}
-                                label={"Clear"}
+                                label={"清除"}
                                 onClick={this.clearMsgs}
                                 style={{
                                     marginLeft: 5

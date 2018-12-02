@@ -234,20 +234,20 @@ export default class WidgetRenderer extends Component {
             let message = null, isErrorMessage = false;
             switch (this.state.widgetLoadingStatus) {
                 case WidgetLoadingStatus.INIT:
-                    message = 'Initializing ...';
+                    message = '正在初始化 ...';
                     break;
                 case WidgetLoadingStatus.FETCHING:
-                    message = 'Fetching ...';
+                    message = '正在提取 ...';
                     break;
                 case WidgetLoadingStatus.FETCHING_FAIL:
-                    message = 'Fetching failed!';
+                    message = '提取失败!';
                     isErrorMessage = true;
                     break;
                 case WidgetLoadingStatus.LOADING:
-                    message = 'Loading ...';
+                    message = '正在加载 ...';
                     break;
                 case WidgetLoadingStatus.LOADING_FAIL:
-                    message = 'Loading failed!';
+                    message = '加载失败!';
                     isErrorMessage = true;
                     break;
             }

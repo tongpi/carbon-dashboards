@@ -154,9 +154,9 @@ class OverallProductInfo extends Widget {
         ];
 
         this.stackedBarChartConfig = {
-            x: 'Product',
-            charts: [{type: 'bar', y: 'Downloads', fill: '#4659f9'},
-                {type: 'bar', y: 'Customers', fill: '#00b7ee'}],
+            x: '产品',
+            charts: [{type: 'bar', y: '下载量', fill: '#4659f9'},
+                {type: 'bar', y: '客户数', fill: '#00b7ee'}],
             maxLength: 6,
             width: this.props.glContainer.width,
             height: this.props.glContainer.height,
@@ -171,7 +171,7 @@ class OverallProductInfo extends Widget {
         };
 
         this.metadata = {
-            names: ['Country', 'Country Code', 'Region', 'Product', 'Revenue', 'Downloads', 'Customers'],
+            names: ['国家', '国家代码', '地区', '产品', '收入', '下载量', '客户数'],
             types: ['ordinal', 'ordinal', 'ordinal', 'ordinal', 'linear', 'linear', 'linear']
         };
 

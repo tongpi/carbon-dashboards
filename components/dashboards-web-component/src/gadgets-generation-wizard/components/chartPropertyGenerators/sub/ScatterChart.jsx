@@ -51,8 +51,7 @@ class Scatter extends Component {
                         <StreamProperty
                             id="x"
                             value={this.props.configuration.x}
-                            fieldName="X axis field*"
-                            onChange={(id, value) => this.props.handleSubChartPropertyChange(id, value)}
+							fieldName="X 轴*"                            onChange={(id, value) => this.props.handleSubChartPropertyChange(id, value)}
                             metadata={this.props.metadata}
                             fullWidth
                         />
@@ -60,8 +59,7 @@ class Scatter extends Component {
                         <StreamProperty
                             id="y"
                             value={this.props.configuration.y}
-                            fieldName="Y axis field*"
-                            filter={Types.dataset.metadata.linear}
+							fieldName="Y 轴*"                            filter={Types.dataset.metadata.linear}
                             onChange={(id, value) => this.props.handleSubChartPropertyChange(id, value)}
                             metadata={this.props.metadata}
                             fullWidth
@@ -70,7 +68,7 @@ class Scatter extends Component {
                         <StreamProperty
                             id="color"
                             value={this.props.configuration.color}
-                            fieldName="Data field, according to which, color categorization is done"
+                            fieldName="颜色字段。基于该字段来确定颜色分类"
                             metadata={this.props.metadata}
                             onChange={(id, value) => this.props.handleSubChartPropertyChange(id, value)}
                             fullWidth
@@ -79,7 +77,7 @@ class Scatter extends Component {
                         <StreamProperty
                             id="size"
                             value={this.props.configuration.size}
-                            fieldName="Field, using which, mark sizes are categorized"
+                            fieldName="大小字段。 基于该字段来确定标记大小"
                             metadata={this.props.metadata}
                             filter={Types.dataset.metadata.linear}
                             onChange={(id, value) => this.props.handleSubChartPropertyChange(id, value)}
@@ -89,7 +87,7 @@ class Scatter extends Component {
                         <TextProperty
                             id="maxLength"
                             value={this.props.configuration.maxLength}
-                            fieldName="Maximum Length of the data set displayed*"
+                            fieldName="要显示的数据的最大长度*"
                             onChange={(id, value) => this.props.handleSubChartPropertyChange(id, value)}
                             number
                             fullWidth
@@ -109,21 +107,21 @@ class Scatter extends Component {
                                 <ColorProperty
                                     id="fill"
                                     value={this.props.configuration.fill}
-                                    fieldName="Color in which data should be plotted"
+                                    fieldName="要绘制的数据的颜色"
                                     onChange={(id, value) => this.props.handleSubChartPropertyChange(id, value)}
                                 />
                                 <br />
                             </div>) : (null)
                         }
                         <br />
-                        <a>Color set to use in the charts</a>
+                        <a>图表中使用的颜色</a>
                         {(this.props.configuration.colorScale.length === 0) ?
                             (
                                 <a>
                                     &nbsp; &nbsp;
                                     <FlatButton
                                         primary
-                                        label="Default"
+                                        label="缺省"
                                         onClick={() => this.props.addColorMember('colorScale')}
                                     />
                                 </a>
@@ -197,7 +195,7 @@ class Scatter extends Component {
                             </div>) :
                             (null)}
                         <br />
-                        <FlatButton label="Remove Chart" onClick={() => this.props.removeChart()} primary />
+                        <FlatButton label="删除图表" onClick={() => this.props.removeChart()} primary />
                         <br />
                         <br />
                     </div>

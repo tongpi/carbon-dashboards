@@ -31,8 +31,8 @@ class GadgetDetailsConfigurator extends Component {
                 <TextField
                     id='name'
                     name='name'
-                    floatingLabelText='Enter a name for the widget'
-                    hintText='E.g. Sales growth'
+                    floatingLabelText='输入小部件的名称'
+                    hintText='例如. 销售增长'
                     value={this.props.gadgetDetails.name}
                     onChange={e => this.props.handleGadgetDetailsChange('name', e.target.value)}
                     fullWidth

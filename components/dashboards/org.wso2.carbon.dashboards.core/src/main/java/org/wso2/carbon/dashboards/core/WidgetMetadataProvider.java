@@ -18,10 +18,10 @@
 
 package org.wso2.carbon.dashboards.core;
 
+import org.wso2.carbon.dashboards.core.bean.importer.WidgetType;
 import org.wso2.carbon.dashboards.core.bean.widget.GeneratedWidgetConfigs;
 import org.wso2.carbon.dashboards.core.bean.widget.WidgetMetaInfo;
 import org.wso2.carbon.dashboards.core.exception.DashboardException;
-import org.wso2.carbon.uiserver.api.App;
 
 import java.util.Optional;
 import java.util.Set;
@@ -51,12 +51,31 @@ public interface WidgetMetadataProvider {
     void addGeneratedWidgetConfigs(GeneratedWidgetConfigs generatedWidgetConfigs) throws DashboardException;
 
     /**
+     * Update the configuration of the specified generated widget.
+     *
+     * @param generatedWidgetConfigs configurations of the generated widget
+     * @throws DashboardException if an error occurred when reading or processing configuration of the widget
+     */
+    void updateGeneratedWidgetConfigs(GeneratedWidgetConfigs generatedWidgetConfigs) throws DashboardException;
+
+    /**
      * Returns configurations of al available widgets.
      *
      * @return configurations of the widgets
      * @throws DashboardException if an error occurred when reading or processing configurations
      */
     Set<WidgetMetaInfo> getAllWidgetConfigurations() throws DashboardException;
+
+    /**
+     * Get generated widget configurations.
+     *
+     * @since 4.0.29
+     *
+     * @param widgetIds List og widget Ids
+     * @return Set of widget configurations
+     * @throws DashboardException
+     */
+    Set<GeneratedWidgetConfigs> getGeneratedWidgetConfigs(Set<String> widgetIds) throws DashboardException;
 
     /**
      * Delete the configuration of the specified widget.
@@ -75,16 +94,14 @@ public interface WidgetMetadataProvider {
     boolean isWidgetPresent(String widgetName) throws DashboardException;
 
     /**
-     * Sets the dashboard portal app to this provider.
+     * Check if the given widget is present in the filesystem.
      *
-     * @param dashboardApp dashboard portal app
-     */
-    void setDashboardApp(App dashboardApp);
-
-    /**
-     * Returns the dashboard portal app of this provider.
+     * @since 4.0.29
      *
-     * @return dashboard portal app
+     * @param widgetName Name fo the widget
+     * @param widgetType Type of the widget
+     * @return Status
+     * @throws DashboardException
      */
-    App getDashboardApp();
+    boolean isWidgetPresent(String widgetName, WidgetType widgetType) throws DashboardException;
 }

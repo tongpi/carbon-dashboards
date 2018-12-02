@@ -17,29 +17,27 @@
  *
  */
 
-import {Checkbox, RaisedButton, Snackbar, TextField} from 'material-ui';
-import {darkBaseTheme, getMuiTheme, MuiThemeProvider} from 'material-ui/styles';
+import { Checkbox, RaisedButton, Snackbar, TextField } from 'material-ui';
+import { MuiThemeProvider } from 'material-ui/styles';
 import Qs from 'qs';
-import React, {Component} from 'react';
-import {Redirect} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {FormPanel, Header} from '../common';
+import FormPanel from '../common/FormPanel';
 
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import AuthManager from './utils/AuthManager';
-
-const muiTheme = getMuiTheme(darkBaseTheme);
+import Header from '../common/Header';
+import defaultTheme from '../utils/Theme';
 
 /**
  * Style constants.
  */
 const styles = {
-    messageBox: {textAlign: 'center', color: 'white'},
-    errorMessage: {backgroundColor: '#17262e', color: 'white', border: '2px solid #e74c3c'},
-    cookiePolicy: {padding: '10px', backgroundColor: '#fcf8e3', fontFamily: muiTheme.fontFamily,
-        border: '1px solid #faebcc', color: '#8a6d3b'},
-    cookiePolicyAnchor: {fontWeight: 'bold', color: '#8a6d3b'}
+    cookiePolicy: { padding: '10px', fontFamily: defaultTheme.fontFamily,
+        border: '1px solid #8a6d3b', color: '#8a6d3b'},
+    cookiePolicyAnchor: { fontWeight: 'bold', color: '#8a6d3b' },
 };
 
 /**
@@ -58,7 +56,7 @@ export default class Login extends Component {
             password: '',
             authenticated: false,
             rememberMe: false,
-            referrer: window.contextPath,
+            referrer: '/',
         };
         this.authenticate = this.authenticate.bind(this);
     }
@@ -133,12 +131,16 @@ export default class Login extends Component {
         }
 
         return (
-            <MuiThemeProvider muiTheme={muiTheme}>
+            <MuiThemeProvider muiTheme={defaultTheme}>
                 <div>
-                    <Header title={<FormattedMessage id="portal" defaultMessage="Portal"/>} hideUserSettings/>
+                    <Header
+                        title={<FormattedMessage id='portal.title' defaultMessage='Portal' />}
+                        rightElement={<span />}
+                    />
                     <FormPanel title={<FormattedMessage id="login.title" defaultMessage="Login"/>}
                                onSubmit={this.authenticate}>
                         <TextField
+                            autoFocus
                             fullWidth
                             autoComplete="off"
                             floatingLabelText={<FormattedMessage id="login.username" defaultMessage="Username"/>}
@@ -221,8 +223,6 @@ export default class Login extends Component {
                         message={this.state.error}
                         open={this.state.showError}
                         autoHideDuration="4000"
-                        contentStyle={styles.messageBox}
-                        bodyStyle={styles.errorMessage}
                         onRequestClose={() => this.setState({error: '', showError: false})}
                     />
                 </div>

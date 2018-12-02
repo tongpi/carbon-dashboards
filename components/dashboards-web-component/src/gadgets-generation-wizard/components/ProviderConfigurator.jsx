@@ -29,6 +29,8 @@ import CodeProperty from './inputTypes/CodeProperty';
 import UtilFunctions from '../utils/UtilFunctions';
 // App Constants
 import Types from '../utils/Types';
+import DynamicQueryComponent from './DynamicQueryComponent';
+import MetaDataCollector from './ProviderConfiguratorComponents/MetaDataCollector';
 
 /**
  * Displays data provider selection, and the properties related to the selected provider type
@@ -39,14 +41,18 @@ class ProviderConfigurator extends Component {
         this.state = {
             configuration: props.configuration,
             configRenderTypes: props.configRenderTypes,
+            configRenderHints: props.configRenderHints || {},
         };
     }
 
     componentWillReceiveProps(props) {
-        this.setState({
-            configuration: props.configuration,
-            configRenderTypes: props.configRenderTypes,
-        });
+        if (this.state.configuration !== props.configuration) {
+            this.setState({
+                configuration: props.configuration,
+                configRenderTypes: props.configRenderTypes,
+                configRenderHints: props.configRenderHints || {},
+            });
+        }
     }
 
     /**
@@ -59,10 +65,11 @@ class ProviderConfigurator extends Component {
                 propertyKeys.push(key);
             }
         }
-
-        return propertyKeys.map(key => (
-            this.renderAsInputField(key, this.state.configRenderTypes[key])
-        ));
+        return propertyKeys.map((key) => {
+            return (
+                this.renderAsInputField(key, this.state.configRenderTypes[key], this.state.configRenderHints[key])
+            );
+        });
     }
 
     /**
@@ -70,19 +77,30 @@ class ProviderConfigurator extends Component {
      * @param value
      * @param type
      */
-    renderAsInputField(value, type) {
+    renderAsInputField(value, type, inputHint) {
         switch (type) {
             case (Types.inputFields.SWITCH):
                 return (
                     <div>
-                        <br />
                         <SwitchProperty
                             id={value}
+                            inputHint={inputHint}
                             value={this.props.configuration[value]}
                             fieldName={UtilFunctions.toSentenceCase(value)}
                             onChange={(id, value) => this.props.handleProviderConfigPropertyChange(id, value)}
                         />
-                        <br />
+                    </div>
+                );
+            case (Types.inputFields):
+                return (
+                    <div>
+                        <SwitchProperty
+                            id={value}
+                            inputHint={inputHint}
+                            value={this.props.configuration[value]}
+                            fieldName={UtilFunctions.toSentenceCase(value)}
+                            onChange={(id, value) => this.props.handleProviderConfigPropertyChange(id, value)}
+                        />
                     </div>
                 );
             case (Types.inputFields.SQL_CODE):
@@ -91,19 +109,29 @@ class ProviderConfigurator extends Component {
                     <div>
                         <CodeProperty
                             id={value}
+                            inputHint={inputHint}
                             value={this.props.configuration[value]}
                             fieldName={UtilFunctions.toSentenceCase(value)}
                             mode={(type === Types.inputFields.SQL_CODE) ? 'sql' : 'text'}
                             onChange={(id, value) => this.props.handleProviderConfigPropertyChange(id, value)}
                         />
-                        <br />
                     </div>
+                );
+            case (Types.inputFields.DYNAMIC_SQL_CODE):
+            case (Types.inputFields.DYNAMIC_SIDDHI_CODE):
+                return (
+                    <DynamicQueryComponent
+                        value={this.props.configuration[value].queryFunctionImpl}
+                        handleDynamicQuery={this.props.handleDynamicQuery}
+                        inputHint={inputHint}
+                    />
                 );
             default:
                 return (
                     <div>
                         <TextProperty
                             id={value}
+                            inputHint={inputHint}
                             value={this.props.configuration[value]}
                             fieldName={UtilFunctions.toSentenceCase(value)}
                             onChange={(id, value) => this.props.handleProviderConfigPropertyChange(id, value)}
@@ -111,7 +139,6 @@ class ProviderConfigurator extends Component {
                             multiLine={type === Types.inputFields.TEXT_AREA}
                             fullWidth
                         />
-                        <br />
                     </div>
                 );
         }
@@ -130,13 +157,35 @@ class ProviderConfigurator extends Component {
                         <MenuItem
                             key={provider}
                             value={provider}
-                            primaryText={UtilFunctions.toSentenceCase(provider)} />
+                            primaryText={UtilFunctions.toSentenceCase(provider)}
+                        />
                     ))}
                 </SelectField>
-                <br />
+                <div  style={{ fontSize: 'medium', color: 'rgb(255,255,255,0.3)' }} >
+                    {this.props.configProviderDescription}
+                </div>
                 {this.renderProperties()}
+                {
+                    this.props.providerType && this.props.providerType === 'WebSocketProvider' ?
+                        <MetaDataCollector
+                            metadata={this.props.providerMetadata}
+                            handleMetadataChange={this.props.handleMetadataInput}
+                        /> :
+                        null
+                }
             </div>
         );
+    }
+
+    static validateWebSocketConfig(config) {
+        return config.mapType && ['xml', 'json', 'text'].indexOf(config.mapType.toLowerCase()) > -1 &&
+            config.topic && config.topic.length > 0;
+    }
+
+    static validateMetadata(metadata) {
+        return metadata.names &&
+            metadata.names.length > 0 &&
+            !(metadata.names.filter(name => name === null || name.length === 0).length > 0);
     }
 }
 

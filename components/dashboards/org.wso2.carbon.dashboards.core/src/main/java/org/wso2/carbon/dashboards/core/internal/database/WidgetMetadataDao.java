@@ -52,6 +52,60 @@ public class WidgetMetadataDao {
         this.queryManager = queryManager;
     }
 
+    public void initWidgetTable() throws DashboardException {
+        if (!tableExists(QueryManager.WIDGET_RESOURCE_TABLE)) {
+            this.createWidgetResourceTable();
+        }
+    }
+
+    /**
+     * Create widget resource table.
+     */
+    private void createWidgetResourceTable() throws DashboardException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String query = null;
+        try {
+            connection = getConnection();
+            connection.setAutoCommit(false);
+            query = queryManager.getQuery(connection, QueryManager.CREATE_WIDGET_RESOURCE_TABLE);
+            ps = connection.prepareStatement(query);
+            ps.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
+            rollbackQuietly(connection);
+            LOGGER.debug("Failed to execute SQL query {}", query);
+            throw new DashboardException("Unable to create the '" + QueryManager.WIDGET_RESOURCE_TABLE +
+                    "' table.", e);
+        } finally {
+            closeQuietly(connection, ps, null);
+        }
+    }
+
+    /**
+     * Method for checking whether or not the given table (which reflects the current event table instance) exists.
+     *
+     * @return true/false based on the table existence.
+     */
+    private boolean tableExists(String tableName) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String query = null;
+        try {
+            connection = getConnection();
+            query = queryManager.getQuery(connection, QueryManager.TABLE_CHECK);
+            ps = connection.prepareStatement(query.replace(QueryManager.TABLE_NAME_PLACEHOLDER, tableName));
+            return ps.execute();
+        } catch (SQLException e) {
+            rollbackQuietly(connection);
+            LOGGER.debug("Table '{}' assumed to not exist since its existence check query {} resulted "
+                    + "in exception {}.", tableName, query, e.getMessage());
+            return false;
+        } finally {
+            closeQuietly(connection, ps, null);
+        }
+    }
+
     private Connection getConnection() throws SQLException {
         return dataSource.getConnection();
     }
@@ -81,6 +135,33 @@ public class WidgetMetadataDao {
             closeQuietly(connection, ps, null);
         }
     }
+
+    public void updateGeneratedWidgetConfigs(GeneratedWidgetConfigs generatedWidgetConfigs) throws DashboardException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String query = null;
+        generatedWidgetConfigs.setId(generatedWidgetConfigs.getName().replace(" ", "-"));
+        try {
+            connection = getConnection();
+            query = queryManager.getQuery(connection, QueryManager.UPDATE_WIDGET_CONFIG_QUERY);
+            connection.setAutoCommit(false);
+            ps = connection.prepareStatement(query);
+            Blob blob = connection.createBlob();
+            blob.setBytes(1, toJsonBytes(generatedWidgetConfigs));
+            ps.setObject(1, blob);
+            ps.setString(2, generatedWidgetConfigs.getId());
+            ps.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
+            rollbackQuietly(connection);
+            LOGGER.debug("Failed to execute SQL query {}", query);
+            throw new DashboardException("Cannot update widget with " + generatedWidgetConfigs + ".", e);
+        } finally {
+            closeQuietly(connection, ps, null);
+        }
+    }
+
+
 
     private static byte[] toJsonBytes(Object generatedWidgetConfigs) {
         return GSON.toJson(generatedWidgetConfigs).getBytes(StandardCharsets.UTF_8);
@@ -128,9 +209,8 @@ public class WidgetMetadataDao {
             resultSet = ps.executeQuery();
             Set<GeneratedWidgetConfigs> widgetNameSet = new HashSet<>();
             while (resultSet.next()) {
-                GeneratedWidgetConfigs generatedWidgetConfigs = new GeneratedWidgetConfigs();
-                generatedWidgetConfigs.setId(resultSet.getString(COLUMN_WIDGET_ID));
-                generatedWidgetConfigs.setName(resultSet.getString(COLUMN_WIDGET_NAME));
+                GeneratedWidgetConfigs generatedWidgetConfigs =
+                        fromJsonBytes(resultSet.getBlob(COLUMN_WIDGET_CONFIGS));
                 widgetNameSet.add(generatedWidgetConfigs);
             }
             return widgetNameSet;

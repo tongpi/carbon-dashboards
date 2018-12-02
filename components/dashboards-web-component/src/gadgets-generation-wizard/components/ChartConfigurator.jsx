@@ -35,8 +35,18 @@ import ScatterChart from './chartPropertyGenerators/main/ScatterChart';
 import NumberChart from './chartPropertyGenerators/main/NumberChart';
 import GeographicalChart from './chartPropertyGenerators/main/GeographicalChart';
 import TableChart from './chartPropertyGenerators/main/TableChart';
+import SearchBar from './chartPropertyGenerators/main/SearchBar';
 // App Utils
 import UtilFunctions from '../utils/UtilFunctions';
+import DataPublishingComponent from './DataPublishingComponent';
+
+/**
+ * Style constants
+ */
+const styles = {
+    errorMessage: {backgroundColor: '#FF5722', color: 'white'},
+    successMessage: {backgroundColor: '#4CAF50', color: 'white'},
+};
 
 /**
  * Displays chart type selection, and the properties related to the selected chart type
@@ -44,6 +54,7 @@ import UtilFunctions from '../utils/UtilFunctions';
 class ChartConfigurator extends Component {
     constructor(props) {
         super(props);
+        this.handlePublisherConfigs = this.handlePublisherConfigs.bind(this);
         this.state = {
             // Data related
             chartType: '',
@@ -75,6 +86,10 @@ class ChartConfigurator extends Component {
         state.chartConfiguration = JSON.parse(JSON.stringify(Configurations.charts[mainChartType]));
         this.setState(state);
         this.props.onConfigurationChange(state.chartConfiguration);
+    }
+
+    handlePublisherConfigs(widgetOutputConfigs) {
+        this.state.chartConfiguration.widgetOutputConfigs = widgetOutputConfigs;
     }
 
     /**
@@ -132,11 +147,36 @@ class ChartConfigurator extends Component {
                             onConfigurationChange={configuration => this.props.onConfigurationChange(configuration)}
                         />
                     );
+                case (Types.chart.searchBar):
+                    return (
+                        <SearchBar
+                            metadata={this.props.metadata}
+                            configuration={this.state.chartConfiguration}
+                            onConfigurationChange={configuration => this.props.onConfigurationChange(configuration)}
+                        />
+                    );
                 default:
                     return (<div />);
             }
         }
         return (<div />);
+    }
+
+    /**
+     * Return data available for data publish
+     * @returns {Array}
+     */
+    getOptionsForDataPublishComponent() {
+        if (this.state.chartType === Types.chart.searchBar) {
+            // if search bar is selected only tht column selected must be available for data publisher config
+            const columnName = [];
+            if (this.state.chartConfiguration.charts[0].column) { 
+                columnName.push(this.state.chartConfiguration.charts[0].column);
+            }
+            return columnName;
+        } else {
+            return this.state.metadata.names;
+        }
     }
 
     /**
@@ -148,38 +188,44 @@ class ChartConfigurator extends Component {
         let isGadgetConfigurationValid = false;
         switch (this.state.chartType) {
             case (Types.chart.lineAreaBarChart):
-                if (UtilFunctions.validateLineChartConfiguration(configuration)) {
+                if (UtilFunctions.validateLineChartConfiguration(configuration, this)) {
                     configuration = UtilFunctions.prepareLineChartConfiguration(configuration);
                     isGadgetConfigurationValid = true;
                 }
                 break;
             case (Types.chart.pieChart):
-                if (UtilFunctions.validatePieChartConfiguration(configuration)) {
+                if (UtilFunctions.validatePieChartConfiguration(configuration, this)) {
                     configuration = UtilFunctions.preparePieChartConfiguration(configuration);
                     isGadgetConfigurationValid = true;
                 }
                 break;
             case (Types.chart.scatterChart):
-                if (UtilFunctions.validateScatterChartConfiguration(configuration)) {
+                if (UtilFunctions.validateScatterChartConfiguration(configuration, this)) {
                     configuration = UtilFunctions.prepareScatterChartConfiguration(configuration);
                     isGadgetConfigurationValid = true;
                 }
                 break;
             case (Types.chart.numberChart):
-                if (UtilFunctions.validateNumberChartConfiguration(configuration)) {
+                if (UtilFunctions.validateNumberChartConfiguration(configuration, this)) {
                     configuration = UtilFunctions.prepareNumberChartConfiguration(configuration);
                     isGadgetConfigurationValid = true;
                 }
                 break;
             case (Types.chart.geographicalChart):
-                if (UtilFunctions.validateGeographicalChartConfiguration(configuration)) {
+                if (UtilFunctions.validateGeographicalChartConfiguration(configuration, this)) {
                     configuration = UtilFunctions.prepareGeographicalChartConfiguration(configuration);
                     isGadgetConfigurationValid = true;
                 }
                 break;
             case (Types.chart.tableChart):
-                if (UtilFunctions.validateTableChartConfiguration(configuration)) {
+                if (UtilFunctions.validateTableChartConfiguration(configuration, this)) {
                     configuration = UtilFunctions.prepareTableChartConfiguration(configuration);
+                    isGadgetConfigurationValid = true;
+                }
+                break;
+            case (Types.chart.searchBar):
+                if (UtilFunctions.validateSearchBarConfiguration(configuration, this)) {
+                    configuration = UtilFunctions.prepareSearchBarConfiguration(configuration);
                     isGadgetConfigurationValid = true;
                 }
                 break;
@@ -199,10 +245,11 @@ class ChartConfigurator extends Component {
      * Displays snackbar with the given message
      * @param message
      */
-    displaySnackbar(message) {
+    displaySnackbar(message, styleKey) {
         this.setState({
             snackbarMessage: message,
             isSnackbarOpen: true,
+            snackbarMessageType: styleKey,
         });
     }
 
@@ -240,8 +287,22 @@ class ChartConfigurator extends Component {
                             value={Types.chart.tableChart}
                             primaryText={Constants.CHART_NAMES.TABLE_CHART}
                         />
+                        <MenuItem
+                            value={Types.chart.searchBar}
+                            primaryText={Constants.CHART_NAMES.SEARCH_BAR}
+                        />
                     </SelectField>
                     {this.displayChartProperties()}
+                    {
+                        this.state.chartType !== ''
+                        && this.getOptionsForDataPublishComponent().length > 0
+                        &&
+                        <DataPublishingComponent
+                            outputAttributes={this.getOptionsForDataPublishComponent()}
+                            onConfigurationChange={this.handlePublisherConfigs}
+                            chartType={this.state.chartType}
+                        />
+                    }
                     <br />
                     {(this.state.chartType !== '') ?
                         (<RaisedButton
@@ -263,6 +324,7 @@ class ChartConfigurator extends Component {
                             isSnackbarOpen: false,
                         });
                     }}
+                    bodyStyle={styles[this.state.snackbarMessageType]}
                 />
             </div>
         );

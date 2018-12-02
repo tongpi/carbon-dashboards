@@ -27,6 +27,25 @@ public class GeneratedWidgetConfigs {
     private String id;
     private JsonElement chartConfig;
     private JsonElement providerConfig;
+    private JsonElement metadata;
+    private String version;
+    private JsonElement pubsub;
+
+    public JsonElement getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(JsonElement metadata) {
+        this.metadata = metadata;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
     public JsonElement getChartConfig() {
         return chartConfig;
@@ -60,6 +79,15 @@ public class GeneratedWidgetConfigs {
         this.id = id;
     }
 
+    public JsonElement getPubsub() {
+        return pubsub;
+    }
+
+    public void setPubsub(JsonElement pubsub) {
+        this.pubsub = pubsub;
+    }
+
+
     @Override
     public String toString() {
         return "GeneratedWidgetConfigs{" +
@@ -67,6 +95,7 @@ public class GeneratedWidgetConfigs {
                ", id='" + id + '\'' +
                ", chartConfig='" + chartConfig + '\'' +
                ", providerConfig='" + providerConfig + '\'' +
+               ", metadata='" + metadata + '\'' +
                '}';
     }
 }

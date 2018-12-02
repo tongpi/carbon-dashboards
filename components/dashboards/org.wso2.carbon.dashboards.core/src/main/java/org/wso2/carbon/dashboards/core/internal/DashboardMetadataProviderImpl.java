@@ -17,27 +17,27 @@
  */
 package org.wso2.carbon.dashboards.core.internal;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.analytics.idp.client.core.api.IdPClient;
 import org.wso2.carbon.analytics.idp.client.core.exception.IdPClientException;
-import org.wso2.carbon.analytics.permissions.PermissionManager;
 import org.wso2.carbon.analytics.permissions.PermissionProvider;
 import org.wso2.carbon.analytics.permissions.bean.Permission;
 import org.wso2.carbon.analytics.permissions.bean.Role;
 import org.wso2.carbon.analytics.permissions.exceptions.PermissionException;
-import org.wso2.carbon.config.ConfigurationException;
-import org.wso2.carbon.config.provider.ConfigProvider;
 import org.wso2.carbon.dashboards.core.DashboardMetadataProvider;
+import org.wso2.carbon.dashboards.core.WidgetMetadataProvider;
 import org.wso2.carbon.dashboards.core.bean.DashboardConfigurations;
 import org.wso2.carbon.dashboards.core.bean.DashboardMetadata;
+import org.wso2.carbon.dashboards.core.bean.importer.DashboardArtifact;
+import org.wso2.carbon.dashboards.core.bean.importer.Page;
+import org.wso2.carbon.dashboards.core.bean.importer.PageContent;
+import org.wso2.carbon.dashboards.core.bean.importer.WidgetCollection;
+import org.wso2.carbon.dashboards.core.bean.importer.WidgetType;
+import org.wso2.carbon.dashboards.core.bean.widget.GeneratedWidgetConfigs;
 import org.wso2.carbon.dashboards.core.exception.DashboardException;
 import org.wso2.carbon.dashboards.core.exception.DashboardRuntimeException;
 import org.wso2.carbon.dashboards.core.exception.UnauthorizedException;
@@ -45,9 +45,11 @@ import org.wso2.carbon.dashboards.core.internal.database.DashboardMetadataDao;
 import org.wso2.carbon.dashboards.core.internal.database.DashboardMetadataDaoFactory;
 import org.wso2.carbon.dashboards.core.internal.roles.provider.RolesProvider;
 import org.wso2.carbon.datasource.core.api.DataSourceService;
+import org.wso2.carbon.uiserver.api.App;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +63,6 @@ import java.util.stream.Collectors;
  *
  * @since 4.0.0
  */
-@Component(service = DashboardMetadataProvider.class, immediate = true)
 public class DashboardMetadataProviderImpl implements DashboardMetadataProvider {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DashboardMetadataProviderImpl.class);
@@ -69,79 +70,54 @@ public class DashboardMetadataProviderImpl implements DashboardMetadataProvider 
     private static final String PERMISSION_SUFFIX_VIEWER = ".viewer";
     private static final String PERMISSION_SUFFIX_EDITOR = ".editor";
     private static final String PERMISSION_SUFFIX_OWNER = ".owner";
+    private static final String UNIVERSAL_WIDGET = "UniversalWidget";
 
-    private DashboardMetadataDao dao;
+    private final DashboardMetadataDao dao;
     private DataSourceService dataSourceService;
-    private ConfigProvider configProvider;
-    private PermissionProvider permissionProvider;
-    private IdPClient identityClient;
-    private RolesProvider rolesProvider;
+    private final DashboardConfigurations dashboardConfigurations;
+    private final PermissionProvider permissionProvider;
+    private final IdPClient identityClient;
 
-    /**
-     * Creates a new dashboard data provider.
-     */
-    public DashboardMetadataProviderImpl() {
-    }
+    private WidgetMetadataProvider widgetMetadataProvider;
 
-    DashboardMetadataProviderImpl(DashboardMetadataDao dao, PermissionProvider permissionProvider, RolesProvider
-            rolesProvider) {
-        this.dao = dao;
-        this.permissionProvider = permissionProvider;
-        this.rolesProvider = rolesProvider;
-    }
-
-    @Activate
-    protected void activate(BundleContext bundleContext) {
+    public DashboardMetadataProviderImpl(DataSourceService dataSourceService,
+                                         DashboardConfigurations dashboardConfigurations,
+                                         PermissionProvider permissionProvider, IdPClient identityClient) {
         try {
-            this.dao = DashboardMetadataDaoFactory.createDao(dataSourceService, configProvider);
+            this.dao = DashboardMetadataDaoFactory.createDao(dataSourceService, dashboardConfigurations);
+            this.dao.initDashboardTable();
         } catch (DashboardException e) {
-            throw new DashboardRuntimeException("Cannot create DAO for DB access.", e);
+            throw new DashboardRuntimeException("Cannot create dashboard DAO for DB access.", e);
         }
-        LOGGER.debug("{} activated.", this.getClass().getName());
-    }
-
-    @Deactivate
-    protected void deactivate(BundleContext bundleContext) {
-        LOGGER.debug("{} deactivated.", this.getClass().getName());
-    }
-
-    @Reference(service = DataSourceService.class,
-            cardinality = ReferenceCardinality.AT_LEAST_ONE,
-            policy = ReferencePolicy.DYNAMIC,
-            unbind = "unsetDataSourceService")
-    protected void setDataSourceService(DataSourceService dataSourceService) {
         this.dataSourceService = dataSourceService;
+        this.dashboardConfigurations = dashboardConfigurations;
+        this.permissionProvider = permissionProvider;
+        this.identityClient = identityClient;
     }
 
-    protected void unsetDataSourceService(DataSourceService dataSourceService) {
-        this.dataSourceService = null;
+    DashboardMetadataProviderImpl(DashboardMetadataDao dao, DashboardConfigurations dashboardConfigurations,
+                                  PermissionProvider permissionProvider, IdPClient identityClient) {
+        this.dao = dao;
+        this.dashboardConfigurations = dashboardConfigurations;
+        this.permissionProvider = permissionProvider;
+        this.identityClient = identityClient;
     }
 
-    @Reference(service = ConfigProvider.class,
-            cardinality = ReferenceCardinality.MANDATORY,
-            policy = ReferencePolicy.DYNAMIC,
-            unbind = "unsetConfigProvider")
-    protected void setConfigProvider(ConfigProvider configProvider) {
-        this.configProvider = configProvider;
+    @Override
+    public void init(App dashboardApp) {
+        this.widgetMetadataProvider = new WidgetMetadataProviderImpl(dashboardApp, dataSourceService,
+                                                                     dashboardConfigurations);
+        DashboardImporter dashboardImporter = new DashboardImporter(this, widgetMetadataProvider);
+        dashboardImporter.importDashboards();
     }
 
-    protected void unsetConfigProvider(ConfigProvider configProvider) {
-        this.configProvider = null;
+    void setWidgetMetadataProvider(WidgetMetadataProvider widgetMetadataProvider) {
+        this.widgetMetadataProvider = widgetMetadataProvider;
     }
 
-    @Reference(
-            name = "permission-manager",
-            service = PermissionManager.class,
-            cardinality = ReferenceCardinality.MANDATORY,
-            policy = ReferencePolicy.DYNAMIC,
-            unbind = "unsetPermissionManager"
-    )
-    protected void setPermissionManager(PermissionManager permissionManager) {
-        this.permissionProvider = permissionManager.getProvider();
-    }
-
-    protected void unsetPermissionManager(PermissionManager permissionManager) {
-        this.permissionProvider = null;
+    @Override
+    public WidgetMetadataProvider getWidgetMetadataProvider() {
+        return widgetMetadataProvider;
     }
 
     @Override
@@ -190,16 +166,23 @@ public class DashboardMetadataProviderImpl implements DashboardMetadataProvider 
     }
 
     @Override
+    public void add(DashboardMetadata dashboardMetadata) throws DashboardException {
+        RolesProvider rolesProvider = new RolesProvider(dashboardConfigurations);
+
+        dao.add(dashboardMetadata);
+        for (Permission permission : buildDashboardPermissions(dashboardMetadata.getUrl())) {
+            permissionProvider.addPermission(permission);
+            for (String roleId: rolesProvider.getCreatorRoleIds()) {
+                permissionProvider.grantPermission(permission, new Role(roleId, ""));
+            }
+        }
+    }
+
+    @Override
     public void add(String user, DashboardMetadata dashboardMetadata) throws DashboardException {
         // TODO: 11/10/17 validate parameters
-        List<String> creatorRoleIds;
-        RolesProvider rolesProvider = null;
-        try {
-            rolesProvider = new RolesProvider(configProvider.getConfigurationObject(DashboardConfigurations.class));
-            creatorRoleIds = rolesProvider.getCreatorRoleIds();
-        } catch (ConfigurationException e) {
-            throw new DashboardException("Error in reading dashboard creator roles !", e);
-        }
+        RolesProvider rolesProvider = new RolesProvider(dashboardConfigurations);
+        List<String> creatorRoleIds = rolesProvider.getCreatorRoleIds();
         Set<String> filteredRoleIds = creatorRoleIds.stream()
                 .filter(role -> hasRoles(user, role))
                 .collect(Collectors.toSet());
@@ -217,6 +200,11 @@ public class DashboardMetadataProviderImpl implements DashboardMetadataProvider 
     }
 
     @Override
+    public void update(DashboardMetadata dashboardMetadata) throws DashboardException {
+        dao.update(dashboardMetadata);
+    }
+
+    @Override
     public void update(String user, DashboardMetadata dashboardMetadata) throws DashboardException {
         // TODO: 11/10/17 validate parameters
         if (permissionProvider.hasPermission(user, new Permission(PERMISSION_APP_NAME, dashboardMetadata.getUrl() +
@@ -228,7 +216,6 @@ public class DashboardMetadataProviderImpl implements DashboardMetadataProvider 
             throw new UnauthorizedException("Insufficient permissions to update the dashboard with ID "
                     + dashboardMetadata.getUrl());
         }
-
     }
 
     @Override
@@ -315,6 +302,82 @@ public class DashboardMetadataProviderImpl implements DashboardMetadataProvider 
     }
 
     /**
+     * Return exportable dashboard definition.
+     *
+     * @param dashboardUrl URL of the dashboard
+     * @return Exportable dashboard definition
+     * @throws DashboardException If an error occurred while reading or processing dashboards
+     */
+    @Override
+    public DashboardArtifact exportDashboard(String dashboardUrl) throws DashboardException {
+        Optional<DashboardMetadata> dashboardMetadataOptional = dao.get(dashboardUrl);
+        if (!dashboardMetadataOptional.isPresent()) {
+            throw new DashboardException("Cannot find the dashboard '" + dashboardUrl + "'");
+        }
+
+        DashboardArtifact artifact = new DashboardArtifact();
+
+        // Set JSON parsed content to pages.
+        DashboardMetadata dashboardMetadata = dashboardMetadataOptional.get();
+        // Convert stringified pages object to proper JSONElement before exporting.
+        dashboardMetadata.setPages(new JsonParser().parse((String) dashboardMetadata.getPages()));
+        artifact.setDashboard(dashboardMetadata);
+
+        Map<WidgetType, Set<String>> widgets = findWidgets(dashboardMetadata);
+
+        // Set metadata of generated widgets
+        Set<GeneratedWidgetConfigs> generatedWidgetConfigs = widgetMetadataProvider
+                .getGeneratedWidgetConfigs(widgets.get(WidgetType.GENERATED));
+        WidgetCollection widgetCollection = new WidgetCollection();
+        widgetCollection.setGenerated(generatedWidgetConfigs);
+
+        // Set list of custom widgets
+        widgetCollection.setCustom(widgets.get(WidgetType.CUSTOM));
+        artifact.setWidgets(widgetCollection);
+        return artifact;
+    }
+
+    /**
+     * Find widgets by analyzing a dashboard pages.
+     *
+     * @param dashboardMetadata Dashboard definition
+     * @return Set of widget IDs
+     * @throws DashboardException If an error occurred while reading or processing dashboards
+     */
+    private Map<WidgetType, Set<String>> findWidgets(DashboardMetadata dashboardMetadata) throws DashboardException {
+        Page[] dashboardPages = new Gson().fromJson((JsonElement) dashboardMetadata.getPages(),
+                Page[].class);
+        Map<WidgetType, Set<String>> widgets = new HashMap<>();
+        widgets.put(WidgetType.GENERATED, new HashSet<>());
+        widgets.put(WidgetType.CUSTOM, new HashSet<>());
+        for (Page page : dashboardPages) {
+            findWidgets(page.getContent(), widgets);
+        }
+        return widgets;
+    }
+
+    /**
+     * Recursively find widgets by analyzing dashboard page contents.
+     *
+     * @param contents Dashboard page content
+     * @param widgets  Set of widget IDs
+     */
+    private void findWidgets(Set<PageContent> contents, Map<WidgetType, Set<String>> widgets) {
+        for (PageContent content : contents) {
+            if (content.getComponent() != null) {
+                if (UNIVERSAL_WIDGET.equals(content.getComponent())) {
+                    widgets.get(WidgetType.GENERATED).add((String) content.getProps().get("widgetID"));
+                } else {
+                    widgets.get(WidgetType.CUSTOM).add(content.getComponent());
+                }
+            }
+            if (content.getContent() != null) {
+                findWidgets(content.getContent(), widgets);
+            }
+        }
+    }
+
+    /**
      * Build basic dashboard permission string.
      *
      * @param dashboardUrl
@@ -385,21 +448,13 @@ public class DashboardMetadataProviderImpl implements DashboardMetadataProvider 
         return permissionProvider.hasPermission(user, new Permission(PERMISSION_APP_NAME, dashboardUrl +
                 permissionSuffix));
     }
-
-
-    @Reference(
-            name = "IdPClient",
-            service = IdPClient.class,
-            cardinality = ReferenceCardinality.MANDATORY,
-            policy = ReferencePolicy.DYNAMIC,
-            unbind = "unsetIdP"
-    )
-    protected void setIdP(IdPClient client) {
-        this.identityClient = client;
+  
+    /**
+     * Returns dashboardConfigurations for report generation
+     * @return DashboardConfigurations
+     */
+    @Override
+    public DashboardConfigurations getReportGenerationConfigurations() {
+        return this.dashboardConfigurations;
     }
-
-    protected void unsetIdP(IdPClient client) {
-        this.identityClient = null;
-    }
-
 }

@@ -14,27 +14,29 @@
  *  KIND, either express or implied.  See the License for the
  *  specific language governing permissions and limitations
  *  under the License.
- *
  */
 package org.wso2.carbon.dashboards.core.bean.widget;
 
 import com.google.gson.JsonElement;
+import java.util.List;
 
 /**
  * Bean class for configs in widget configuration file.
  */
 public class WidgetConfigs {
-    private PubSub pubsub;
+    private JsonElement pubsub;
     private JsonElement chartConfig;
     private JsonElement providerConfig;
+    private JsonElement metadata;
     private boolean isGenerated;
+    private List<Option> options;
 
     /**
      * This method is get pubsub configuration of the widget.
      *
      * @return pubsub configuration
      */
-    public PubSub getPubsub() {
+    public JsonElement getPubsub() {
         return pubsub;
     }
 
@@ -43,8 +45,26 @@ public class WidgetConfigs {
      *
      * @param pubsub pubsub configuration of the widget
      */
-    public void setPubsub(PubSub pubsub) {
+    public void setPubsub(JsonElement pubsub) {
         this.pubsub = pubsub;
+    }
+
+    /**
+     * This method is used to get options configuration of the widget.
+     *
+     * @return options configuration
+     */
+    public List<Option> getOptions() {
+        return options;
+    }
+
+    /**
+     * This method is used to set the options configuration of the widget.
+     *
+     * @param options options configuration of the widget
+     */
+    public void setOptions(List<Option> options) {
+        this.options = options;
     }
 
     public JsonElement getChartConfig() {
@@ -69,5 +89,13 @@ public class WidgetConfigs {
 
     public void setGenerated(boolean generated) {
         isGenerated = generated;
+    }
+
+    public JsonElement getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(JsonElement metadata) {
+        this.metadata = metadata;
     }
 }

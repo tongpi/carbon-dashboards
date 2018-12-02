@@ -26,10 +26,13 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import ExpandTransition from 'material-ui/internal/ExpandTransition';
 import Dialog from 'material-ui/Dialog';
+import IconButton from 'material-ui/IconButton';
+import Close from 'material-ui/svg-icons/navigation/close';
 import Snackbar from 'material-ui/Snackbar';
-import { darkBaseTheme, getMuiTheme, MuiThemeProvider } from 'material-ui/styles';
+import { MuiThemeProvider } from 'material-ui/styles';
 // App Components
-import { FormPanel, Header } from '../../common';
+import FormPanel from '../../common/FormPanel';
+import Header from '../../common/Header';
 import ChartConfigurator from './ChartConfigurator';
 import ProviderConfigurator from './ProviderConfigurator';
 import UtilFunctions from '../utils/UtilFunctions';
@@ -37,28 +40,32 @@ import GadgetDetailsConfigurator from './GadgetDetailsConfigurator';
 import ChartPreviewer from './chartPreview/ChartPreviewer';
 // API
 import GadgetsGenerationAPI from '../../utils/apis/GadgetsGenerationAPI';
+import defaultTheme from '../../utils/Theme';
 
 const appContext = window.contextPath;
-
-/**
- * Material UI theme
- */
-const muiTheme = getMuiTheme(darkBaseTheme);
 
 /**
  * Style constants
  */
 const styles = {
     messageBox: { textAlign: 'center', color: 'white' },
-    errorMessage: { backgroundColor: '#FF5722', color: 'white' },
+    errorMessage: {
+        backgroundColor: '#FF5722',
+        color: 'white',
+        height: 'auto',
+        width: 'auto',
+        lineHeight: 1,
+        paddingTop: 15,
+        paddingBottom: 15
+    },
     successMessage: { backgroundColor: '#4CAF50', color: 'white' },
-    completedStepperText: {color: 'white'},
+    completedStepperText: { color: 'white' },
     activeStepperText: { color: '#0097A7' },
     inactiveStepperText: { color: '#FFFFFF', opacity: 0.3 },
 };
 
 /**
- * Represents a main chart, that can have Line / Bar / Area as sub charts
+ * Represents a main chart, that can have Line / Bar / Area assub charts
  */
 class GadgetsGenerationWizard extends Component {
     constructor() {
@@ -74,10 +81,13 @@ class GadgetsGenerationWizard extends Component {
             providersList: [],
             providerConfiguration: {},
             providerConfigRenderTypes: {},
+            providerConfigRenderHints: {},
+            providerDescription: '',
             chartConfiguration: {},
+            pubsub: {},
             metadata: {
-                names: ['rpm', 'torque', 'horsepower', 'EngineType'],
-                types: ['LINEAR', 'LINEAR', 'LINEAR', 'ORDINAL'],
+                names: [],
+                types: [],
             },
             data: [],
             // UI related
@@ -99,6 +109,10 @@ class GadgetsGenerationWizard extends Component {
         this.dummyAsync = this.dummyAsync.bind(this);
         this.handleNext = this.handleNext.bind(this);
         this.handlePrev = this.handlePrev.bind(this);
+        this.handleDynamicQuery = this.handleDynamicQuery.bind(this);
+        this.handleMetadataInput = this.handleMetadataInput.bind(this);
+        GadgetsGenerationWizard.getPubSubConfiguration = GadgetsGenerationWizard.getPubSubConfiguration.bind(this);
+        this.validateProviderConfiguration = this.validateProviderConfiguration.bind(this);
     }
 
     componentDidMount() {
@@ -121,6 +135,10 @@ class GadgetsGenerationWizard extends Component {
         this.setState(state);
     }
 
+    handleMetadataInput(metadata) {
+        this.setState({ metadata });
+    }
+
     /**
      * Updates the selected provider's type, and specific configuration in the state when a provider is selected
      * @param providerType
@@ -134,12 +152,17 @@ class GadgetsGenerationWizard extends Component {
                     providerType,
                     providerConfigRenderTypes: UtilFunctions.getDefaultH2RenderTypes(),
                     providerConfiguration: UtilFunctions.getDefaultH2Config(),
+                    providerConfigRenderHints: response.data[2],
+                    providerDescription: response.data[3] || '',
                 });
             } else {
                 this.setState({
                     providerType,
                     providerConfigRenderTypes: response.data[0],
                     providerConfiguration: response.data[1],
+                    queryFunctionImpl: response.data[1].queryData.queryFunctionImpl,
+                    providerConfigRenderHints: response.data[2],
+                    providerDescription: response.data[3] || '',
                 });
             }
         }).catch(() => {
@@ -175,22 +198,19 @@ class GadgetsGenerationWizard extends Component {
             const previewableConfig = {
                 name: this.state.gadgetDetails.name,
                 id: (UtilFunctions.generateID(this.state.gadgetDetails.name)),
-                configs: {
-                    providerConfig: {
-                        configs: {
-                            type: this.state.providerType,
-                            config: this.state.providerConfiguration,
-                        },
+                chartConfig: validatedConfiguration,
+                providerConfig: {
+                    configs: {
+                        type: this.state.providerType,
+                        config: this.state.providerConfiguration,
                     },
-                    chartConfig: validatedConfiguration,
                 },
+                metadata: this.state.metadata,
             };
             this.setState({
                 previewConfiguration: previewableConfig,
                 previewGadget: true,
             });
-        } else {
-            this.displaySnackbar('Please fill in required values', 'errorMessage');
         }
     }
 
@@ -200,24 +220,28 @@ class GadgetsGenerationWizard extends Component {
     submitGadgetConfig() {
         const validatedConfiguration = this.child.getValidatedConfiguration();
         if (!UtilFunctions.isEmpty(validatedConfiguration)) {
-            const submittableConfig = {
+            const submitTableConfig = {
                 name: this.state.gadgetDetails.name,
                 id: (UtilFunctions.generateID(this.state.gadgetDetails.name)),
+                version: '1.0.0',
                 chartConfig: validatedConfiguration,
+                pubsub: GadgetsGenerationWizard.getPubSubConfiguration(validatedConfiguration.widgetOutputConfigs,
+                    this.state.providerConfiguration.queryData.customWidgetInputs),
                 providerConfig: {
                     configs: {
                         type: this.state.providerType,
-                        config: this.state.providerConfiguration
-                    }
-                }
+                        config: this.state.providerConfiguration,
+                    },
+                },
+                metadata: this.state.metadata,
             };
             const apis = new GadgetsGenerationAPI();
-            apis.addGadgetConfiguration(JSON.stringify(submittableConfig)).then((response) => {
+            apis.addGadgetConfiguration(JSON.stringify(submitTableConfig)).then((response) => {
                 if (response.status === 201) {
                     this.displaySnackbar(`Widget ${this.state.gadgetDetails.name} was created successfully!`,
                         'successMessage');
                     setTimeout(() => {
-                        this.props.history.push(appContext);
+                        this.props.history.push('/');
                     }, 1000);
                 } else {
                     this.displaySnackbar('Failed to save the widget', 'errorMessage');
@@ -225,8 +249,6 @@ class GadgetsGenerationWizard extends Component {
             }).catch(() => {
                 this.displaySnackbar('Failed to save the widget', 'errorMessage');
             });
-        } else {
-            this.displaySnackbar('Please fill in required values', 'errorMessage');
         }
     }
 
@@ -241,6 +263,35 @@ class GadgetsGenerationWizard extends Component {
         this.setState({ loading: true }, () => {
             this.asyncTimer = setTimeout(cb, 500);
         });
+    }
+
+    handleDynamicQuery(queryFunctionImpl, customWidgetInputs, systemWidgetInputs, parameters, defaultValues) {
+        this.widgetInputsDefaultValues = defaultValues.split(',');
+        const queryFunction = 'this.getQuery = function (' + parameters + '){' + queryFunctionImpl + '}';
+        this.handleProviderConfigPropertyChange('queryData', {
+            queryFunction,
+            customWidgetInputs,
+            systemWidgetInputs,
+            queryFunctionImpl
+        });
+    }
+
+    static getPubSubConfiguration(widgetOutputConfigs, customWidgetInputs) {
+        const pubsub = {};
+        pubsub.types = [];
+        if (customWidgetInputs.length !== 0) {
+            pubsub.types.push('subscriber');
+            pubsub.subscriberWidgetInputs = customWidgetInputs.map((widgetInput) => {
+                return widgetInput.name;
+            });
+        }
+        if (widgetOutputConfigs && widgetOutputConfigs.length !== 0) {
+            pubsub.types.push('publisher');
+            pubsub.publisherWidgetOutputs = widgetOutputConfigs.map((outputAttribute) => {
+                return outputAttribute.publishedAsValue;
+            });
+        }
+        return pubsub;
     }
 
     /**
@@ -281,22 +332,38 @@ class GadgetsGenerationWizard extends Component {
                 break;
             case (1):
                 // Validate provider configuration and get metadata
-                let isProviderConfigurationValid = true;
                 if (!UtilFunctions.isEmpty(this.state.providerConfiguration)) {
-                    apis.getProviderMetadata(this.state.providerType,
-                        this.state.providerConfiguration).then((response) => {
-                        if (!this.state.loading) {
-                            this.dummyAsync(() => this.setState({
-                                loading: false,
-                                isGadgetDetailsValid: true,
-                                stepIndex: stepIndex + 1,
-                                finished: stepIndex >= 2,
-                                metadata: response.data,
-                            }));
-                        }
-                    }).catch(() => {
-                        this.displaySnackbar('Unable to process your request', 'errorMessage');
-                    });
+                    if (this.state.providerType !== 'WebSocketProvider' &&
+                        this.validateProviderConfiguration(this.state.providerConfiguration)) {
+                        eval(this.state.providerConfiguration.queryData.queryFunction);
+                        this.state.providerConfiguration.queryData.query = this.getQuery.apply(
+                            this, this.widgetInputsDefaultValues);
+                        apis.getProviderMetadata(this.state.providerType,
+                            this.state.providerConfiguration).then((response) => {
+                            if (!this.state.loading) {
+                                this.dummyAsync(() => this.setState({
+                                    loading: false,
+                                    isGadgetDetailsValid: true,
+                                    stepIndex: stepIndex + 1,
+                                    finished: stepIndex >= 2,
+                                    metadata: response.data,
+                                }));
+                            }
+                        }).catch((e) => {
+                            this.displaySnackbar(e.response.data, 'errorMessage');
+                        });
+                    } else if (ProviderConfigurator.validateWebSocketConfig(this.state.providerConfiguration) &&
+                            ProviderConfigurator.validateMetadata(this.state.metadata)) {
+                        this.state.providerConfiguration.queryData = {
+                            customWidgetInputs: [],
+                        };
+                        this.setState({
+                            loading: false,
+                            isGadgetDetailsValid: true,
+                            stepIndex: stepIndex + 1,
+                            finished: stepIndex >= 2,
+                        });
+                    }
                 } else {
                     this.displaySnackbar('Please select a data provider and configure details', 'errorMessage');
                 }
@@ -307,6 +374,22 @@ class GadgetsGenerationWizard extends Component {
             default:
                 this.displaySnackbar('Invalid step', 'errorMessage');
         }
+    }
+
+    validateProviderConfiguration(providerConfig) {
+        if (providerConfig.queryData.queryFunctionImpl === '') {
+            this.displaySnackbar('Please fill Javascript code segment to generate the query for data retrieving',
+                'errorMessage');
+            return false;
+        }
+        for (const key in providerConfig) {
+            if (key !== 'timeColumns' && providerConfig[key] === '') {
+                this.displaySnackbar('Please fill the required field \'' + key + '\' for a valid configuration',
+                    'errorMessage');
+                return false;
+            }
+        }
+        return true;
     }
 
     handlePrev() {
@@ -334,9 +417,15 @@ class GadgetsGenerationWizard extends Component {
                         providersList={this.state.providersList}
                         providerType={this.state.providerType}
                         configuration={this.state.providerConfiguration}
+                        queryFunctionImpl = {this.state.queryFunctionImpl}
                         configRenderTypes={this.state.providerConfigRenderTypes}
+                        configRenderHints={this.state.providerConfigRenderHints}
+                        configProviderDescription={this.state.providerDescription}
+                        providerMetadata={this.state.metadata}
                         handleProviderTypeChange={this.handleProviderTypeChange}
                         handleProviderConfigPropertyChange={this.handleProviderConfigPropertyChange}
+                        handleMetadataInput={this.handleMetadataInput}
+                        handleDynamicQuery={this.handleDynamicQuery}
                     />
                 );
             case 2:
@@ -422,9 +511,7 @@ class GadgetsGenerationWizard extends Component {
                     {this.renderNextButton(stepIndex)}
                     <FlatButton
                         label="Cancel"
-                        onClick={() => {
-                            window.location.href = window.contextPath
-                        }}
+                        onClick={() => this.props.history.push('/')}
                         style={{ marginRight: 12 }}
                     />
                 </div>
@@ -466,15 +553,24 @@ class GadgetsGenerationWizard extends Component {
         const { loading, stepIndex } = this.state;
 
         return (
-            <MuiThemeProvider muiTheme={muiTheme}>
+            <MuiThemeProvider muiTheme={defaultTheme}>
                 <div>
-                    <Header title={<FormattedMessage id="portal" defaultMessage="Portal" />} />
+                    <Header
+                        title={<FormattedMessage id="widget-gen-wizard.title" defaultMessage="Widget Designer" />} />
                     <Dialog
                         modal={false}
                         open={this.state.previewGadget}
                         onRequestClose={() => this.setState({ previewGadget: false })}
                         repositionOnUpdate
+                        paperProps={{ style: { backgroundColor: 'transparent' } }}
                     >
+                        <div
+                            style={{textAlign: 'right'}}>
+                            <IconButton
+                                onClick={() => this.setState({ previewGadget: false })}>
+                                <Close/>
+                            </IconButton>
+                        </div>
                         <ChartPreviewer
                             config={this.state.previewConfiguration}
                         />
@@ -532,4 +628,4 @@ class GadgetsGenerationWizard extends Component {
     }
 }
 
-export default GadgetsGenerationWizard;
+export default withRouter(GadgetsGenerationWizard);

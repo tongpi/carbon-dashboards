@@ -18,6 +18,7 @@
 
 package org.wso2.carbon.dashboards.api.internal;
 
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.analytics.idp.client.core.models.Role;
@@ -25,6 +26,7 @@ import org.wso2.carbon.analytics.msf4j.interceptor.common.AuthenticationIntercep
 import org.wso2.carbon.analytics.msf4j.interceptor.common.util.InterceptorConstants;
 import org.wso2.carbon.dashboards.core.DashboardMetadataProvider;
 import org.wso2.carbon.dashboards.core.bean.DashboardMetadata;
+import org.wso2.carbon.dashboards.core.bean.importer.DashboardArtifact;
 import org.wso2.carbon.dashboards.core.exception.DashboardException;
 import org.wso2.carbon.dashboards.core.exception.UnauthorizedException;
 import org.wso2.msf4j.Microservice;
@@ -41,6 +43,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -60,6 +63,7 @@ public class DashboardRestApi implements Microservice {
 
     public static final String API_CONTEXT_PATH = "/apis/dashboards";
     private static final Logger LOGGER = LoggerFactory.getLogger(DashboardRestApi.class);
+    private static final Gson GSON = new Gson();
 
     private final DashboardMetadataProvider dashboardDataProvider;
 
@@ -265,6 +269,38 @@ public class DashboardRestApi implements Microservice {
         }
     }
 
+    /**
+     * Get dashboard with widget definitions.
+     * URL: https://localhost:9643/portal/apis/dashboards/<DASHBOARD_URL>/export
+     *
+     * To download the dashboard as an attachment,
+     * URL: https://localhost:9643/portal/apis/dashboards/<DASHBOARD_URL>/export?download=true
+     *
+     * @since 4.0.29
+     *
+     * @param url Dashboard URL
+     * @param download Flag to download as an attachment
+     * @return Dashboard JSON
+     */
+    @GET
+    @Path("/{url}/export")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response exportDashboard(@PathParam("url") String url, @QueryParam("download") boolean download) {
+
+        try {
+            DashboardArtifact artifact = dashboardDataProvider.exportDashboard(url);
+            Response.ResponseBuilder responseBuilder = Response.ok(artifact);
+            if (download) {
+                responseBuilder.header("Content-Disposition", "attachment; filename=\""
+                        + replaceCRLFCharacters(url) + ".json\"");
+            }
+            return responseBuilder.build();
+        } catch (DashboardException e) {
+            LOGGER.error("Cannot export dashboard '" + replaceCRLFCharacters(url) + "'.", e);
+            return Response.serverError().entity("Cannot export dashboard '" + url + "'.").build();
+        }
+    }
+
     private static String getUserName(Request request) {
         return request.getProperty(InterceptorConstants.PROPERTY_USERNAME).toString();
     }
@@ -274,5 +310,20 @@ public class DashboardRestApi implements Microservice {
             str = str.replace('\n', '_').replace('\r', '_');
         }
         return str;
+    }
+
+    /**
+     * Gets the configs for pdf
+     *
+     * @return response
+     */
+    @GET
+    @Path("/report-config")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getReportConfigs() {
+        Map<String, Object> reportConfigurations = dashboardDataProvider.getReportGenerationConfigurations()
+                                                                  .getReportConfigs();
+        return Response.ok().entity(reportConfigurations).build();
     }
 }

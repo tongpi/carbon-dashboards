@@ -21,11 +21,10 @@
 
     <groupId>org.wso2.carbon.dashboards</groupId>
     <artifactId>carbon-dashboards</artifactId>
-    <version>4.0.16-SNAPSHOT</version>
+    <version>4.0.49-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>WSO2 Carbon Dashboards - Parent</name>
-
     <parent>
         <groupId>org.wso2</groupId>
         <artifactId>wso2</artifactId>
@@ -234,11 +233,6 @@
             </dependency>
 
             <!--Samples-->
-            <dependency>
-                <groupId>org.wso2.carbon.dashboards.samples</groupId>
-                <artifactId>org.wso2.carbon.dashboards.samples.endpoint</artifactId>
-                <version>${carbon.dashboards.version}</version>
-            </dependency>
             <!--Widgets-->
             <dependency>
                 <groupId>org.wso2.carbon.dashboards.samples.widgets</groupId>
@@ -326,6 +320,12 @@
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.dashboards.samples.widgets</groupId>
+                <artifactId>org.wso2.carbon.dashboards.samples.widgets.revenue-by-product-with-user-preferences</artifactId>
+                <version>${carbon.dashboards.version}</version>
+                <type>zip</type>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.dashboards.samples.widgets</groupId>
                 <artifactId>org.wso2.carbon.dashboards.samples.widgets.revenue-by-region</artifactId>
                 <version>${carbon.dashboards.version}</version>
                 <type>zip</type>
@@ -376,26 +376,36 @@
                 <version>${mockito.core.version}</version>
                 <scope>test</scope>
             </dependency>
+
+            <!-- Carbon Utils -->
+            <dependency>
+                <groupId>org.wso2.carbon.utils</groupId>
+                <artifactId>org.wso2.carbon.utils</artifactId>
+                <version>${carbon.utils.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <properties>
-        <carbon.dashboards.version>4.0.16-SNAPSHOT</carbon.dashboards.version>
+        <carbon.dashboards.version>4.0.49-SNAPSHOT</carbon.dashboards.version>
 
         <!-- Datasource -->
-        <carbon.datasource.core.version>1.1.2</carbon.datasource.core.version>
+        <carbon.datasource.core.version>1.1.4</carbon.datasource.core.version>
         <carbon.datasource.core.version.range>[1.1.2, 2.0.0)</carbon.datasource.core.version.range>
         <h2.database.engine.version>1.2.140.wso2v3</h2.database.engine.version>
 
         <!--Config-->
-        <carbon.config.version>2.0.3</carbon.config.version>
+        <carbon.config.version>2.1.5</carbon.config.version>
         <carbon.config.version.range>[2.0.3, 3.0.0)</carbon.config.version.range>
-        <carbon.securevault.version>5.0.8</carbon.securevault.version>
-        <carbon.utils.version>2.0.2</carbon.utils.version>
+        <carbon.securevault.version>5.0.11</carbon.securevault.version>
+
+        <!--Utils-->
+        <carbon.utils.version>2.0.8</carbon.utils.version>
+        <carbon.utils.version.range>[2.0.2, 3.0.0)</carbon.utils.version.range>
 
         <!--UI Server-->
-        <carbon.uiserver.version>0.19.2</carbon.uiserver.version>
-        <carbon.uiserver.version.range>[0.19.2, 1.0.0]</carbon.uiserver.version.range>
+        <carbon.uiserver.version>0.19.5</carbon.uiserver.version>
+        <carbon.uiserver.version.range>[0.19.5, 1.0.0]</carbon.uiserver.version.range>
 
         <!--MSF4J-->
         <msf4j-core.version>2.5.2</msf4j-core.version>
@@ -406,17 +416,17 @@
         <javax.websocket.version.range>[1.1.0, 2.0.0)</javax.websocket.version.range>
 
         <!--Metrics-->
-        <carbon.metrics.version>2.3.0</carbon.metrics.version>
+        <carbon.metrics.version>2.3.7</carbon.metrics.version>
         <carbon.metrics.version.range>[2.3.0, 3.0.0)</carbon.metrics.version.range>
-        <carbon.jndi.version>1.0.3</carbon.jndi.version>
-        <carbon.datasources.version>1.1.2</carbon.datasources.version>
+        <carbon.jndi.version>1.0.5</carbon.jndi.version>
+        <carbon.datasources.version>1.1.4</carbon.datasources.version>
 
         <!--Analytics-->
-        <carbon.analytics.version>2.0.246</carbon.analytics.version>
-        <carbon.analytics.version.range>[2.0.246, 3.0.0)</carbon.analytics.version.range>
+        <carbon.analytics.version>2.0.455</carbon.analytics.version>
+        <carbon.analytics.version.range>[2.0.395, 3.0.0)</carbon.analytics.version.range>
         <!--Analytics common-->
-        <carbon.analytics-common.version>6.0.51</carbon.analytics-common.version>
-        <carbon.analytics-common.version.range>[6.0.51, 7.0.0)</carbon.analytics-common.version.range>
+        <carbon.analytics-common.version>6.0.72</carbon.analytics-common.version>
+        <carbon.analytics-common.version.range>[6.0.65, 7.0.0)</carbon.analytics-common.version.range>
 
         <!--OSGi-->
         <org.osgi.api.version>6.0.0</org.osgi.api.version>
@@ -448,6 +458,7 @@
         <!--Maven Plugin-->
         <carbon.feature.plugin.version>3.0.0</carbon.feature.plugin.version>
         <maven.exec.plugin.version>1.5.0</maven.exec.plugin.version>
+        <maven.clean.plugin.version>3.0.0</maven.clean.plugin.version>
         <jacoco.maven.plugin.version>0.7.9</jacoco.maven.plugin.version>
         <junit-platform.surefire-provider.version>1.0.2</junit-platform.surefire-provider.version>
 
@@ -487,6 +498,20 @@
                     <version>${carbon.feature.plugin.version}</version>
                 </plugin>
                 <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${maven.clean.plugin.version}</version>
+                    <configuration>
+                        <filesets>
+                            <fileset>
+                                <directory>${project.basedir}/node_modules</directory>
+                            </fileset>
+                            <fileset>
+                                <directory>${project.basedir}/dist</directory>
+                            </fileset>
+                        </filesets>
+                    </configuration>
+                </plugin>
+                <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
                     <version>${maven.exec.plugin.version}</version>
@@ -504,38 +529,8 @@
                                 </arguments>
                             </configuration>
                         </execution>
-                        <!-- 'npm run clean' which is run in clean lifecycle needs 'rimraf' node module.
-                         Make sure it is installed  -->
                         <execution>
-                            <id>npm install rimraf (clean)</id>
-                            <goals>
-                                <goal>exec</goal>
-                            </goals>
-                            <phase>pre-clean</phase>
-                            <configuration>
-                                <executable>${npm.executable}</executable>
-                                <arguments>
-                                    <argument>install</argument>
-                                    <argument>rimraf</argument>
-                                </arguments>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>npm run clean (clean)</id>
-                            <goals>
-                                <goal>exec</goal>
-                            </goals>
-                            <phase>clean</phase>
-                            <configuration>
-                                <executable>${npm.executable}</executable>
-                                <arguments>
-                                    <argument>run</argument>
-                                    <argument>clean</argument>
-                                </arguments>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>npm run dev (compile)</id>
+                            <id>npm run build (compile and build)</id>
                             <goals>
                                 <goal>exec</goal>
                             </goals>

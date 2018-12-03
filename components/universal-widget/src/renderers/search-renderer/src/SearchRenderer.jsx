@@ -410,7 +410,7 @@ export default class SearchRenderer extends Component {
                             components={components}
                             value={this.state.selectedOptions}
                             onChange={this.handleChange}
-                            placeholder='Select option'
+                            placeholder='选择选项'
                             isMulti={this.props.config.charts[0].selectMultiple}
                         />
                     </div>

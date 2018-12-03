@@ -200,7 +200,7 @@ export default class DashboardRenderer extends Component {
     renderReportGenerationErrorSnackBar() {
         return (
             <Snackbar
-                message={'捕获小部件快照是出错'}
+                message={'捕获小部件快照时出错了'}
                 open={this.state.showWidgetReportGenerationError}
                 autoHideDuration="4000"
                 onRequestClose={() => this.setState({ showWidgetReportGenerationError: false })}

@@ -62,11 +62,11 @@ class PagesSidePane extends Component {
     handlePageTitleUpdate(pageId, newTitle) {
         return new Promise((resolve, reject) => {
             if (!newTitle || (newTitle.length < 1)) {
-                reject('Page title cannot be empty');
+                reject('页面标题不能为空');
             } else {
                 const updatingPage = this.getPageById(pageId);
                 if (!updatingPage) {
-                    this.setValidationErrorMessage(`Cannot find page for ID '${pageId}'!`);
+                    this.setValidationErrorMessage(`未找到ID为 '${pageId}' 的页面!`);
                     reject();
                 }
                 const currentTitle = updatingPage.name;
@@ -84,13 +84,13 @@ class PagesSidePane extends Component {
     handlePageUrlUpdate(pageId, newUrl) {
         return new Promise((resolve, reject) => {
             if (!newUrl || (newUrl.length < 1)) {
-                reject('Page URL cannot be empty');
+                reject('页面URL不能为空');
             } else if (newUrl !== encodeURIComponent(newUrl)) {
-                reject('Page URL cannot contain special characters');
+                reject('页面URL不能包含特殊字符');
             } else {
                 const updatingPage = this.getPageById(pageId);
                 if (!updatingPage) {
-                    this.setValidationErrorMessage(`Cannot find page for ID '${pageId}'!`);
+                    this.setValidationErrorMessage(`未找到ID为 '${pageId}' 的页面!`);
                     reject();
                 }
                 const currentUrl = updatingPage.id;
@@ -121,7 +121,7 @@ class PagesSidePane extends Component {
     handleLandingPageUpdate(newLandingPageId) {
         return new Promise((resolve, reject) => {
             if (!this.getPageById(newLandingPageId)) {
-                this.setValidationErrorMessage(`Cannot find page for ID '${newLandingPageId}'!`);
+                this.setValidationErrorMessage(`未找到ID为 '${newLandingPageId}' 的页面!`);
                 reject();
             }
             const currentLandingPage = this.props.dashboard.landingPage;
@@ -143,7 +143,7 @@ class PagesSidePane extends Component {
             const count = pages.length + 1;
             const newPage = {
                 id: `new-page-${count}`,
-                name: `New Page-${count}`,
+                name: `新页面-${count}`,
                 content: [],
             };
             pages.push(newPage);
@@ -162,10 +162,10 @@ class PagesSidePane extends Component {
     handlePageDelete(pageId) {
         return new Promise((resolve, reject) => {
             if (!this.getPageById(pageId)) {
-                this.setValidationErrorMessage(`Cannot find page for ID '${pageId}'!`);
+                this.setValidationErrorMessage(`未找到ID为 '${pageId}' 的页面!`);
                 reject();
             } else if (this.props.dashboard.landingPage === pageId) {
-                this.setValidationErrorMessage('Cannot delete landing page!');
+                this.setValidationErrorMessage('不能删除主页面!');
                 reject();
             }
             const currentPages = this.props.dashboard.content.pages;

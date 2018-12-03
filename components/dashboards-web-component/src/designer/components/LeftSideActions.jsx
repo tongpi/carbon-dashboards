@@ -58,7 +58,7 @@ export default class LeftSideActions extends Component {
                         style={{ height: 48 }}
                         value={isPagesPaneOpen}
                         leftIcon={<EditorInsertDriveFile />}
-                        title={'Pages'}
+                        title={'页面'}
                         onClick={() =>
                             this.setState({
                                 isPagesPaneOpen: !isPagesPaneOpen,
@@ -71,7 +71,7 @@ export default class LeftSideActions extends Component {
                         style={{ height: 48 }}
                         value={isWidgetsPaneOpen}
                         leftIcon={<DeviceWidgets />}
-                        title={'Widgets'}
+                        title={'小部件'}
                         onClick={() =>
                             this.setState({
                                 isWidgetsPaneOpen: !isWidgetsPaneOpen,

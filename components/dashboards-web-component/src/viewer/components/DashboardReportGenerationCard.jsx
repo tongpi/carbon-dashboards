@@ -185,10 +185,10 @@ export default class DashboardReportGenerationCard extends Component {
                             >
                                 {orientations.map(field =>
                                     (
-                                        <MenuItem
+                                        <MenuItem 
                                             key={field}
                                             value={field}
-                                            primaryText={field}
+                                            primaryText={field === 'Landscape'?"横向":"纵向"}
                                         />
                                     ))}
                             </SelectField>

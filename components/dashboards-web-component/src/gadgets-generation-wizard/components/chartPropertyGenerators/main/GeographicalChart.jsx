@@ -157,7 +157,7 @@ class Geographical extends Component {
                 <br />
                 <br />
                 <br />
-                <a>图表要使用的颜色集/a>
+                <a>图表要使用的颜色</a>
                 {(this.props.configuration.charts[0].colorScale.length === 0) ?
                     (
                         <a>

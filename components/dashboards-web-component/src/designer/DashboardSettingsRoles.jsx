@@ -30,9 +30,9 @@ import DashboardAPI from '../utils/apis/DashboardAPI';
  */
 const actors = ['owners', 'editors', 'viewers'];
 const actorLabels = {
-    owners: 'Owners',
-    editors: 'Editors',
-    viewers: 'Viewers',
+    owners: '所有者',
+    editors: '编辑者',
+    viewers: '查看者',
 };
 
 /**

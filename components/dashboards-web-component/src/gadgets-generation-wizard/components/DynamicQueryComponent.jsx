@@ -228,7 +228,7 @@ class DynamicQueryComponent extends Component {
                     <Divider/>
                     <CardMedia>
                         <div style={{marginTop: 15}}>
-                            <div style={{verticalAlign: 'middle', marginRight: 10}}>Add widget inputs</div>
+                            <div style={{verticalAlign: 'middle', marginRight: 10}}>添加小部件配置项</div>
                             <TextField
                                 style={textFieldStyle}
                                 floatingLabelText={<FormattedMessage id="widget.input.value"
@@ -257,7 +257,7 @@ class DynamicQueryComponent extends Component {
                                     <Table onRowSelection={this.handleRowSelection}>
                                         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                                             <TableRow>
-                                                <TableHeaderColumn>输入名称</TableHeaderColumn>
+                                                <TableHeaderColumn>配置项名称</TableHeaderColumn>
                                                 <TableHeaderColumn>缺省值</TableHeaderColumn>
                                             </TableRow>
                                         </TableHeader>

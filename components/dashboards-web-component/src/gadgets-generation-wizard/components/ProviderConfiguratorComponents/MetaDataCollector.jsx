@@ -67,7 +67,7 @@ export default class MetaDataCollector extends React.Component {
                                     <TextInput
                                         id={name}
                                         value={name}
-                                        fieldName={'Metadata Name'}
+                                        fieldName={'元数据名称'}
                                         onChange={
                                             (id, value) => this.handleMetadataPropertyChange(metaIndex, 'names', value)
                                         }
@@ -77,13 +77,13 @@ export default class MetaDataCollector extends React.Component {
                                     <SelectProperty
                                         id={`metadata-${metaIndex}-type`}
                                         value={metadata.types[metaIndex]}
-                                        fieldName={'Metadata Type'}
+                                        fieldName={'元数据类型'}
                                         onChange={
                                             (id, value) => this.handleMetadataPropertyChange(metaIndex, 'types', value)
                                         }
                                         options={{
                                             values: ['LINEAR', 'ORDINAL', 'TIME'],
-                                            texts: ['LINEAR', 'ORDINAL', 'TIME'],
+                                            texts: ['线性', '序数', '时间'],
                                         }}
                                         fullWidth
                                     />

@@ -135,7 +135,7 @@ class DashboardCard extends Component {
                 modal={false}
                 onRequestClose={this.hideDashboardDeleteConfirmDialog}
             >
-                This action cannot be undone
+                该操作一旦执行不能被撤销
             </Dialog>
         );
     }

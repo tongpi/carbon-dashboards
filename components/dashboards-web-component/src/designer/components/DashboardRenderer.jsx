@@ -177,7 +177,7 @@ export default class DashboardRenderer extends Component {
         if (!(_.isEmpty(_.get(component, 'config.props.configs.options')) &&
                 !_.get(component, 'config.props.configs.pubsub.types', []).includes('subscriber'))) {
             const settingsButton = document.createElement('i');
-            settingsButton.title = 'settings';
+            settingsButton.title = '设置';
             settingsButton.className = 'fw fw-configarations widget-configuration-button';
             settingsButton.addEventListener('click', () => {
                 this.unhighlightSelectedWidgetContainer();

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  ~
@@ -19,31 +20,31 @@
 <component xmlns="http://products.wso2.org/carbon">
     <ManagementPermissions>
         <ManagementPermission>
-            <DisplayName>Portal</DisplayName>
+            <DisplayName>门户</DisplayName>
             <ResourceId>/permission/admin/manage/portal</ResourceId>
         </ManagementPermission>
         <ManagementPermission>
-            <DisplayName>Login</DisplayName>
+            <DisplayName>登录</DisplayName>
             <ResourceId>/permission/admin/manage/portal/login</ResourceId>
         </ManagementPermission>
         <ManagementPermission>
-            <DisplayName>Dashboard</DisplayName>
+            <DisplayName>仪表板</DisplayName>
             <ResourceId>/permission/admin/manage/portal/dashboard</ResourceId>
         </ManagementPermission>
         <ManagementPermission>
-            <DisplayName>Create</DisplayName>
+            <DisplayName>创建</DisplayName>
             <ResourceId>/permission/admin/manage/portal/dashboard/create</ResourceId>
         </ManagementPermission>
         <ManagementPermission>
-            <DisplayName>Settings</DisplayName>
+            <DisplayName>设置</DisplayName>
             <ResourceId>/permission/admin/manage/portal/dashboard/settings</ResourceId>
         </ManagementPermission>
         <ManagementPermission>
-            <DisplayName>Gadget</DisplayName>
+            <DisplayName>小部件</DisplayName>
             <ResourceId>/permission/admin/manage/portal/gadget</ResourceId>
         </ManagementPermission>
         <ManagementPermission>
-            <DisplayName>Generate</DisplayName>
+            <DisplayName>生成</DisplayName>
             <ResourceId>/permission/admin/manage/portal/gadget/generate</ResourceId>
         </ManagementPermission>
         <ManagementPermission>
@@ -51,19 +52,19 @@
             <ResourceId>/permission/admin/manage/portal/gadget/upload</ResourceId>
         </ManagementPermission>
         <ManagementPermission>
-            <DisplayName>Delete</DisplayName>
+            <DisplayName>删除</DisplayName>
             <ResourceId>/permission/admin/manage/portal/gadget/delete</ResourceId>
         </ManagementPermission>
         <ManagementPermission>
-            <DisplayName>Layout</DisplayName>
+            <DisplayName>布局</DisplayName>
             <ResourceId>/permission/admin/manage/portal/layout</ResourceId>
         </ManagementPermission>
         <ManagementPermission>
-            <DisplayName>Upload</DisplayName>
+            <DisplayName>上传</DisplayName>
             <ResourceId>/permission/admin/manage/portal/layout/upload</ResourceId>
         </ManagementPermission>
         <ManagementPermission>
-            <DisplayName>Delete</DisplayName>
+            <DisplayName>删除</DisplayName>
             <ResourceId>/permission/admin/manage/portal/layout/delete</ResourceId>
         </ManagementPermission>
     </ManagementPermissions>

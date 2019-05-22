@@ -48,7 +48,7 @@
             <ResourceId>/permission/admin/manage/portal/gadget/generate</ResourceId>
         </ManagementPermission>
         <ManagementPermission>
-            <DisplayName>Upload</DisplayName>
+            <DisplayName>上传</DisplayName>
             <ResourceId>/permission/admin/manage/portal/gadget/upload</ResourceId>
         </ManagementPermission>
         <ManagementPermission>

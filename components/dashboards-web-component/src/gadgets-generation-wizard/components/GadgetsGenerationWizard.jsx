@@ -166,7 +166,7 @@ class GadgetsGenerationWizard extends Component {
                 });
             }
         }).catch(() => {
-            this.displaySnackbar('åŠ è½½æä¾›è€…é…ç½®å¤±è´¥', 'errorMessage');
+            this.displaySnackbar('¼ÓÔØÌá¹©ÕßÅäÖÃÊ§°Ü', 'errorMessage');
         });
     }
 
@@ -238,16 +238,16 @@ class GadgetsGenerationWizard extends Component {
             const apis = new GadgetsGenerationAPI();
             apis.addGadgetConfiguration(JSON.stringify(submitTableConfig)).then((response) => {
                 if (response.status === 201) {
-                    this.displaySnackbar(`å°éƒ¨ä»¶ ${this.state.gadgetDetails.name} åˆ›å»ºæˆåŠŸ!`,
+                    this.displaySnackbar(`Ğ¡²¿¼ş ${this.state.gadgetDetails.name} ´´½¨³É¹¦!`,
                         'successMessage');
                     setTimeout(() => {
                         this.props.history.push('/');
                     }, 1000);
                 } else {
-                    this.displaySnackbar('å°éƒ¨ä»¶ä¿å­˜å¤±è´¥', 'errorMessage');
+                    this.displaySnackbar('Ğ¡²¿¼ş±£´æÊ§°Ü', 'errorMessage');
                 }
             }).catch(() => {
-                this.displaySnackbar('å°éƒ¨ä»¶ä¿å­˜å¤±è´¥', 'errorMessage');
+                this.displaySnackbar('Ğ¡²¿¼ş±£´æÊ§°Ü', 'errorMessage');
             });
         }
     }
@@ -318,16 +318,16 @@ class GadgetsGenerationWizard extends Component {
                     }).catch((error) => {
                         if (error.response) {
                             if (error.response.status === 409) {
-                                this.displaySnackbar('åŒåå°éƒ¨ä»¶å·²å­˜åœ¨', 'errorMessage');
+                                this.displaySnackbar('Í¬ÃûĞ¡²¿¼şÒÑ´æÔÚ', 'errorMessage');
                             } else {
-                                this.displaySnackbar('ä¸èƒ½è¿›å…¥ä¸‹ä¸€æ­¥', 'errorMessage');
+                                this.displaySnackbar('²»ÄÜ½øÈëÏÂÒ»²½', 'errorMessage');
                             }
                         } else {
-                            this.displaySnackbar('ä¸èƒ½å¤„ç†ä½ çš„è¯·æ±‚', 'errorMessage');
+                            this.displaySnackbar('²»ÄÜ´¦ÀíÄãµÄÇëÇó', 'errorMessage');
                         }
                     });
                 } else {
-                    this.displaySnackbar('å°éƒ¨ä»¶åç§°ä¸èƒ½ä¸ºç©º', 'errorMessage');
+                    this.displaySnackbar('Ğ¡²¿¼şÃû³Æ²»ÄÜÎª¿Õ', 'errorMessage');
                 }
                 break;
             case (1):
@@ -365,26 +365,26 @@ class GadgetsGenerationWizard extends Component {
                         });
                     }
                 } else {
-                    this.displaySnackbar('è¯·é€‰æ‹©ä¸€ä¸ªæ•°æ®æä¾›è€…å¹¶å¯¹å…¶ä»”ç»†é…ç½®', 'errorMessage');
+                    this.displaySnackbar('ÇëÑ¡ÔñÒ»¸öÊı¾İÌá¹©Õß²¢¶ÔÆä×ĞÏ¸ÅäÖÃ', 'errorMessage');
                 }
                 break;
             case (2):
                 this.submitGadgetConfig();
                 break;
             default:
-                this.displaySnackbar('è¯¥æ­¥æ— æ•ˆ', 'errorMessage');
+                this.displaySnackbar('¸Ã²½ÎŞĞ§', 'errorMessage');
         }
     }
 
     validateProviderConfiguration(providerConfig) {
         if (providerConfig.queryData.queryFunctionImpl === '') {
-            this.displaySnackbar('è¯·è¾“å…¥Javascriptä»£ç ç‰‡æ®µç”ŸæˆæŸ¥è¯¢æ¥æå–æ•°æ®',
+            this.displaySnackbar('ÇëÊäÈëJavascript´úÂëÆ¬¶ÎÉú³É²éÑ¯À´ÌáÈ¡Êı¾İ',
                 'errorMessage');
             return false;
         }
         for (const key in providerConfig) {
             if (key !== 'timeColumns' && providerConfig[key] === '') {
-                this.displaySnackbar('è¯·ä»¥æœ‰æ•ˆçš„ä¿¡æ¯å¡«å†™å¿…å¡«å­—æ®µ \'' + key + '\' ',
+                this.displaySnackbar('ÇëÒÔÓĞĞ§µÄĞÅÏ¢ÌîĞ´±ØÌî×Ö¶Î \'' + key + '\' ',
                     'errorMessage');
                 return false;
             }
@@ -438,7 +438,7 @@ class GadgetsGenerationWizard extends Component {
                     />
                 );
             default:
-                return 'è¯¥æ­¥æ— æ•ˆ';
+                return '¸Ã²½ÎŞĞ§';
         }
     }
 
@@ -447,7 +447,7 @@ class GadgetsGenerationWizard extends Component {
             case 0:
                 return (
                     <RaisedButton
-                        label="ä¸‹ä¸€æ­¥"
+                        label="ÏÂÒ»²½"
                         primary
                         style={{ marginRight: 12 }}
                         onClick={this.handleNext}
@@ -456,7 +456,7 @@ class GadgetsGenerationWizard extends Component {
             case 1:
                 return (
                     <RaisedButton
-                        label="ä¸‹ä¸€æ­¥"
+                        label="ÏÂÒ»²½"
                         primary
                         style={{ marginRight: 12 }}
                         onClick={this.handleNext}
@@ -465,7 +465,7 @@ class GadgetsGenerationWizard extends Component {
             case 2:
                 return (
                     <RaisedButton
-                        label="åˆ›å»º"
+                        label="´´½¨"
                         primary
                         style={{ marginRight: 12 }}
                         onClick={() => this.submitGadgetConfig()}
@@ -503,14 +503,14 @@ class GadgetsGenerationWizard extends Component {
                 <div>{this.getStepContent(stepIndex)}</div>
                 <div style={{ marginTop: 24, marginBottom: 12 }}>
                     <FlatButton
-                        label="åé€€"
+                        label="ºóÍË"
                         disabled={stepIndex === 0}
                         onClick={this.handlePrev}
                         style={{ marginRight: 12 }}
                     />
                     {this.renderNextButton(stepIndex)}
                     <FlatButton
-                        label="å–æ¶ˆ"
+                        label="È¡Ïû"
                         onClick={() => this.props.history.push('/')}
                         style={{ marginRight: 12 }}
                     />
@@ -586,21 +586,21 @@ class GadgetsGenerationWizard extends Component {
                                     <StepLabel
                                         style={this.getStepperTextStyle(stepIndex, 0)}
                                     >
-                                        è¾“å…¥å°éƒ¨ä»¶åç§°
+                                        ÊäÈëĞ¡²¿¼şÃû³Æ
                                     </StepLabel>
                                 </Step>
                                 <Step>
                                     <StepLabel
                                         style={this.getStepperTextStyle(stepIndex, 1)}
                                     >
-                                        é…ç½®æ•°æ®æä¾›è€…
+                                        ÅäÖÃÊı¾İÌá¹©Õß
                                     </StepLabel>
                                 </Step>
                                 <Step>
                                     <StepLabel
                                         style={this.getStepperTextStyle(stepIndex, 2)}
                                     >
-                                        é…ç½®å›¾è¡¨
+                                        ÅäÖÃÍ¼±í
                                     </StepLabel>
                                 </Step>
                             </Stepper>

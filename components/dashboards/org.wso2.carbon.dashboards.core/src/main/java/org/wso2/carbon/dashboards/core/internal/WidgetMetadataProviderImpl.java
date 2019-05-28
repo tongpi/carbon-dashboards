@@ -102,6 +102,7 @@ public class WidgetMetadataProviderImpl implements WidgetMetadataProvider {
 
     @Override
     public boolean isWidgetPresent(String widgetName, WidgetType widgetType) throws DashboardException {
+        // TODO: 02/05/19 Custom widget filtering also to be changed with widgetName 
         switch (widgetType) {
             case CUSTOM:
                 return isCustomWidgetPresent(widgetName);
@@ -115,7 +116,7 @@ public class WidgetMetadataProviderImpl implements WidgetMetadataProvider {
 
     private boolean isGeneratedWidgetPresent(String widgetName) throws DashboardException {
         return widgetMetadataDao.getGeneratedWidgetIdSet().stream()
-                .map(GeneratedWidgetConfigs::getName)
+                .map(GeneratedWidgetConfigs::getId)
                 .anyMatch(name -> name.equals(widgetName));
     }
 

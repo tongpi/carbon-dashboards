@@ -65,8 +65,8 @@ class RevenueByCountry extends Widget {
         };
 
         this.mapConfig = {
-            x: 'å›½å®¶',
-            charts: [{type: 'map', y: 'æ”¶å…¥', mapType: 'world', colorScale: ['#ccc', '#0082ea']}],
+            x: '¹ú¼Ò',
+            charts: [{type: 'map', y: 'ÊÕÈë', mapType: 'world', colorScale: ['#ccc', '#0082ea']}],
             width: this.state.width,
             height: this.state.height,
             style: {
@@ -76,7 +76,7 @@ class RevenueByCountry extends Widget {
         };
 
         this.metadata = {
-            names: ['å›½å®¶', 'å›½å®¶ä»£ç ', 'åœ°åŒº', 'æ”¶å…¥', 'è®¢å•æ•°', 'å®¢æˆ·æ•°'],
+            names: ['¹ú¼Ò', '¹ú¼Ò´úÂë', 'µØÇø', 'ÊÕÈë', '¶©µ¥Êı', '¿Í»§Êı'],
             types: ['ordinal', 'ordinal', 'ordinal', 'linear', 'linear', 'linear']
         };
 

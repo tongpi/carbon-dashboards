@@ -78,13 +78,13 @@ class RevenueByProduct extends Widget {
         };
 
         this.metadata = {
-            names: ['å›½å®¶', 'å›½å®¶ä»£ç ', 'åœ°åŒº', 'äº§å“', 'æ”¶å…¥', 'ä¸‹è½½é‡', 'å®¢æˆ·æ•°'],
+            names: ['¹ú¼Ò', '¹ú¼Ò´úÂë', 'µØÇø', '²úÆ·', 'ÊÕÈë', 'ÏÂÔØÁ¿', '¿Í»§Êı'],
             types: ['ordinal', 'ordinal', 'ordinal', 'ordinal', 'linear', 'linear', 'linear']
         };
 
         this.barChartConfig = {
-            x: 'äº§å“',
-            charts: [{type: 'bar', y: 'æ”¶å…¥', fill: '#10c469'}],
+            x: '²úÆ·',
+            charts: [{type: 'bar', y: 'ÊÕÈë', fill: '#10c469'}],
             maxLength: 5,
             width: props.glContainer.width,
             height: props.glContainer.height,

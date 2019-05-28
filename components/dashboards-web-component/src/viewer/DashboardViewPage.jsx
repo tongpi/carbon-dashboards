@@ -55,6 +55,7 @@ class DashboardViewPage extends Component {
             dashboardFetchStatus: HttpStatus.UNKNOWN,
             isSidePaneOpen: true,
             isCurrentThemeDark: isDarkTheme ? isDarkTheme === 'true' : true,
+            embedWidget: false,
         };
 
         this.fetchDashboard = this.fetchDashboard.bind(this);
@@ -66,6 +67,7 @@ class DashboardViewPage extends Component {
         this.renderPagesList = this.renderPagesList.bind(this);
         this.renderDashboard = this.renderDashboard.bind(this);
         this.renderSideBarNav = this.renderSideBarNav.bind(this);
+        this.toggleRibbons = this.toggleRibbons.bind(this);
     }
 
     componentDidMount() {
@@ -74,12 +76,18 @@ class DashboardViewPage extends Component {
         }
     }
 
+    componentWillMount() {
+        if (this.props.location.search === '?embed=true') {
+            this.state.embedWidget = true;
+        }
+    }
+
     fetchDashboard() {
         new DashboardAPI().getDashboardByID(this.props.match.params.dashboardId)
             .then((response) => {
                 this.dashboard = response.data;
-                if (_.isString(this.dashboard.pages)) {
-                    this.dashboard.pages = JSON.parse(this.dashboard.pages);
+                if (_.isString(this.dashboard.content.pages)) {
+                    this.dashboard.content.pages = JSON.parse(this.dashboard.content.pages);
                 }
                 this.setState({ dashboardFetchStatus: HttpStatus.OK });
             })
@@ -106,6 +114,14 @@ class DashboardViewPage extends Component {
         return {
             pathname: `/dashboards/${this.dashboard.url}/${pageId}`,
         };
+    }
+
+    toggleRibbons(currentTheme) {
+        return [
+            this.renderHeader(currentTheme),
+            this.renderSidePane(currentTheme),
+            this.renderSideBarNav(currentTheme),
+        ];
     }
 
     render() {
@@ -141,19 +157,22 @@ class DashboardViewPage extends Component {
 
         return (
             <MuiThemeProvider muiTheme={currentTheme}>
-                {this.renderHeader(currentTheme)}
-                {this.renderSidePane(currentTheme)}
-                {this.renderSideBarNav(currentTheme)}
+                {!this.state.embedWidget ? this.toggleRibbons(currentTheme) : undefined}
+
                 <div
-                    style={{
-                        position: 'fixed',
-                        top: 40,
-                        right: 0,
-                        bottom: 0,
-                        width: 'calc(100% - 25px)',
-                        overflowX: 'hidden',
-                        overflowY: 'auto',
-                    }}
+                    style={
+                        !this.state.embedWidget
+                            ? {
+                                position: 'fixed',
+                                top: 40,
+                                right: 0,
+                                bottom: 0,
+                                width: 'calc(100% - 25px)',
+                                overflowX: 'hidden',
+                                overflowY: 'auto'
+                            }
+                            : undefined
+                    }
                 >
                     {this.renderDashboard(currentTheme)}
                 </div>
@@ -207,7 +226,7 @@ class DashboardViewPage extends Component {
                 <br />
                 <Divider />
                 <DashboardReportGenerationCard
-                    pages={this.dashboard.pages}
+                    pages={this.dashboard.content.pages}
                     dashboardName={this.dashboard ? this.dashboard.name : this.props.match.params.dashboardId}
                 />
             </Drawer>
@@ -223,7 +242,7 @@ class DashboardViewPage extends Component {
         const landingPage = this.dashboard.landingPage;
         const history = this.props.history;
         let pagesList = [];
-        this.dashboard.pages.forEach((page) => {
+        this.dashboard.content.pages.forEach((page) => {
             if (page.hidden) {
                 return;
             }
@@ -255,7 +274,10 @@ class DashboardViewPage extends Component {
                     insetChildren={!isLandingPage}
                     nestedItems={subPagesList}
                     open={!!subPagesList}
-                    onClick={() => history.push(this.getNavigationToPage(page.id))}
+                    onClick={() => {
+                        history.push(this.getNavigationToPage(page.id));
+                        this.setState({isSidePaneOpen: false});
+                    }}
                     className={isLandingPage ? 'list-item homePage' : 'list-item'}
                 />
             );
@@ -277,7 +299,7 @@ class DashboardViewPage extends Component {
 
     renderDashboard(theme) {
         const { pageId, subPageId } = this.props.match.params;
-        let page = this.dashboard.pages.find(page => (page.id === pageId));
+        let page = this.dashboard.content.pages.find(page => (page.id === pageId));
         if (page) {
             if (page.pages && subPageId) {
                 page = page.pages.find(page => (page.id === subPageId));
@@ -289,6 +311,7 @@ class DashboardViewPage extends Component {
                     dashboardPageContents={page.content}
                     dashboardPageHeight={page.height}
                     theme={theme}
+                    dashboard={this.dashboard}
                 />
             );
         } else {

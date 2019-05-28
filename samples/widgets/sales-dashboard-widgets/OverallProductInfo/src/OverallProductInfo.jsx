@@ -154,9 +154,9 @@ class OverallProductInfo extends Widget {
         ];
 
         this.stackedBarChartConfig = {
-            x: 'äº§å“',
-            charts: [{type: 'bar', y: 'ä¸‹è½½é‡', fill: '#4659f9'},
-                {type: 'bar', y: 'å®¢æˆ·æ•°', fill: '#00b7ee'}],
+            x: '²úÆ·',
+            charts: [{type: 'bar', y: 'ÏÂÔØÁ¿', fill: '#4659f9'},
+                {type: 'bar', y: '¿Í»§Êı', fill: '#00b7ee'}],
             maxLength: 6,
             width: this.props.glContainer.width,
             height: this.props.glContainer.height,
@@ -171,7 +171,7 @@ class OverallProductInfo extends Widget {
         };
 
         this.metadata = {
-            names: ['å›½å®¶', 'å›½å®¶ä»£ç ', 'åœ°åŒº', 'äº§å“', 'æ”¶å…¥', 'ä¸‹è½½é‡', 'å®¢æˆ·æ•°'],
+            names: ['¹ú¼Ò', '¹ú¼Ò´úÂë', 'µØÇø', '²úÆ·', 'ÊÕÈë', 'ÏÂÔØÁ¿', '¿Í»§Êı'],
             types: ['ordinal', 'ordinal', 'ordinal', 'ordinal', 'linear', 'linear', 'linear']
         };
 

@@ -163,7 +163,7 @@ class LineAreaBar extends Component {
                 <StreamProperty
                     id="x"
                     value={this.state.configuration.x}
-                    fieldName="X axis field*"
+					fieldName="X 轴*"
                     onChange={(id, value) => this.handleMainChartPropertyChange(id, value)}
                     metadata={this.props.metadata}
                     fullWidth
@@ -191,7 +191,7 @@ class LineAreaBar extends Component {
                             removeChart={() => this.removeSubChart(index)}
                         />))}
                     <FlatButton
-                        label="Add Chart"
+                        label="添加图表"
                         onClick={() => this.addSubChart(Types.chart.lineAreaBarChart)}
                         primary
                     />
@@ -201,14 +201,14 @@ class LineAreaBar extends Component {
                 <SwitchProperty
                     id="legend"
                     value={this.state.configuration.legend}
-                    fieldName="Show legend"
+                    fieldName="形式图例"
                     onChange={(id, value) => this.handleMainChartPropertyChange(id, value)}
                 />
                 <br />
                 <TextProperty
                     id="maxLength"
                     value={this.state.configuration.maxLength}
-                    fieldName="Maximum Length of the data set displayed*"
+                    fieldName="显示数据的最大长度*"
                     onChange={(id, value) => this.handleMainChartPropertyChange(id, value)}
                     number
                     fullWidth
@@ -222,7 +222,7 @@ class LineAreaBar extends Component {
                     onExpandChange={e => this.setState({ expandAdvanced: e })}
                 >
                     <CardHeader
-                        title="Advanced Settings"
+                        title="高级设置"
                         actAsExpander
                         showExpandableButton
                     />
@@ -234,7 +234,7 @@ class LineAreaBar extends Component {
                         <SwitchProperty
                             id="append"
                             value={this.state.configuration.append}
-                            fieldName="Append new data to the chart"
+                            fieldName="添加新数据到图表"
                             onChange={(id, value) => this.handleMainChartPropertyChange(id, value)}
                         />
                         <br />
@@ -242,7 +242,7 @@ class LineAreaBar extends Component {
                         <TextProperty
                             id="xAxisLabel"
                             value={this.state.configuration.xAxisLabel}
-                            fieldName="Label to be displayed in the x axis"
+                            fieldName="X轴上显示的标注"
                             onChange={(id, value) => this.handleMainChartPropertyChange(id, value)}
                             fullWidth
                         />
@@ -250,7 +250,7 @@ class LineAreaBar extends Component {
                         <TextProperty
                             id="yAxisLabel"
                             value={this.state.configuration.yAxisLabel}
-                            fieldName="Label to be displayed in the y axis"
+                            fieldName="Y轴上显示的标注"
                             onChange={(id, value) => this.handleMainChartPropertyChange(id, value)}
                             fullWidth
                         />
@@ -260,7 +260,7 @@ class LineAreaBar extends Component {
                         <SwitchProperty
                             id="disableVerticalGrid"
                             value={this.state.configuration.disableVerticalGrid}
-                            fieldName="Disable vertical grid lines in the chart"
+                            fieldName="图表上显示垂直网格线"
                             onChange={(id, value) => this.handleMainChartPropertyChange(id, value)}
                         />
                         <br />
@@ -268,13 +268,13 @@ class LineAreaBar extends Component {
                         <SwitchProperty
                             id="disableHorizontalGrid"
                             value={this.state.configuration.disableHorizontalGrid}
-                            fieldName="Disable horizontal grid lines in the chart"
+                            fieldName="图表上显示水平网格线"
                             onChange={(id, value) => this.handleMainChartPropertyChange(id, value)}
                         />
                         <TextProperty
                             id="timeFormat"
                             value={this.state.configuration.timeFormat}
-                            fieldName="Time formatting regex of any time series reference"
+                            fieldName="任何时间序列值参考的正则表达式格式"
                             onChange={(id, value) => this.handleMainChartPropertyChange(id, value)}
                             fullWidth
                         />
@@ -283,10 +283,10 @@ class LineAreaBar extends Component {
                         <SelectProperty
                             id="legendOrientation"
                             value={this.state.configuration.legendOrientation}
-                            fieldName="Orientation of the legend relative to the chart"
+                            fieldName="相对于图表的图例位置"
                             options={{
                                 values: ['top', 'bottom', 'left', 'right'],
-                                texts: ['Top', 'Bottom', 'Left', 'Right'],
+                                texts: ['上方', '下方', '左边', '右边'],
                             }}
                             onChange={(id, value) => this.handleMainChartPropertyChange(id, value)}
                             fullWidth
@@ -297,7 +297,7 @@ class LineAreaBar extends Component {
                         <ColorProperty
                             id="axisLabelColor"
                             value={this.state.configuration.style.axisLabelColor}
-                            fieldName="Color of the axis labels & tick labels in the axis"
+                            fieldName="轴标签和刻度标签文字的颜色"
                             onChange={(id, value) => this.handleMainChartStylePropertyChange(id, value)}
                             fullWidth
                         />
@@ -305,7 +305,7 @@ class LineAreaBar extends Component {
                         <ColorProperty
                             id="legendTitleColor"
                             value={this.state.configuration.style.legendTitleColor}
-                            fieldName="Text color of the legend title"
+                            fieldName="图例标题色"
                             onChange={(id, value) => this.handleMainChartStylePropertyChange(id, value)}
                             fullWidth
                         />
@@ -313,7 +313,7 @@ class LineAreaBar extends Component {
                         <ColorProperty
                             id="legendTextColor"
                             value={this.state.configuration.style.legendTextColor}
-                            fieldName="Text color of the text in the legend"
+                            fieldName="图例文本色"
                             onChange={(id, value) => this.handleMainChartStylePropertyChange(id, value)}
                             fullWidth
                         />
@@ -321,7 +321,7 @@ class LineAreaBar extends Component {
                         <TextProperty
                             id="xAxisTickAngle"
                             value={this.state.configuration.style.xAxisTickAngle}
-                            fieldName="Angle of the x axis ticks"
+                            fieldName="X轴刻度角度"
                             number
                             onChange={(id, value) => this.handleMainChartStylePropertyChange(id, value)}
                             fullWidth
@@ -330,7 +330,7 @@ class LineAreaBar extends Component {
                         <TextProperty
                             id="yAxisTickAngle"
                             value={this.state.configuration.style.yAxisTickAngle}
-                            fieldName="Angle of the y axis ticks"
+                            fieldName="Y轴刻度角度"
                             number
                             onChange={(id, value) => this.handleMainChartStylePropertyChange(id, value)}
                             fullWidth

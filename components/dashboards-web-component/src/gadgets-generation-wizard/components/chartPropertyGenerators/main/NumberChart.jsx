@@ -54,7 +54,7 @@ class Number extends Component {
                 <StreamProperty
                     id="x"
                     value={this.state.configuration.x}
-                    fieldName="Number field to be displayed*"
+                    fieldName="要显示的数字字段*"
                     filter={Types.dataset.metadata.linear}
                     onChange={(id, value) => this.handlePropertyChange(id, value)}
                     metadata={this.props.metadata}
@@ -64,7 +64,7 @@ class Number extends Component {
                 <TextProperty
                     id="title"
                     value={this.state.configuration.title}
-                    fieldName="Title to be displayed on the chart*"
+                    fieldName="图表的标题*"
                     onChange={(id, value) => this.handlePropertyChange(id, value)}
                     fullWidth
                 />
@@ -74,7 +74,7 @@ class Number extends Component {
                 <SwitchProperty
                     id="showDifference"
                     value={this.state.configuration.showDifference}
-                    fieldName="Show difference with relation to the previous number"
+                    fieldName="显示相对于上一个数字的变化"
                     onChange={(id, value) => this.handlePropertyChange(id, value)}
                 />
                 <br />
@@ -82,7 +82,7 @@ class Number extends Component {
                 <SwitchProperty
                     id="showPercentage"
                     value={this.state.configuration.showPercentage}
-                    fieldName="Show percentage difference with relation to the previous number"
+                    fieldName="显示相对于上一个数字的变化百分比"
                     onChange={(id, value) => this.handlePropertyChange(id, value)}
                 />
                 <br />

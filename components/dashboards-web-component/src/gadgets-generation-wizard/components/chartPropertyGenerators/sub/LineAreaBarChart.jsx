@@ -53,7 +53,7 @@ class LineAreaBar extends Component {
                         <SelectProperty
                             id="type"
                             value={this.props.configuration.type}
-                            fieldName="Type of the chart*"
+                            fieldName="图表类型*"
                             onChange={(id, value) => this.props.handleSubChartPropertyChange(id, value)}
                             options={{
                                 values: [Types.chart.lineChart, Types.chart.areaChart, Types.chart.barChart],
@@ -66,8 +66,7 @@ class LineAreaBar extends Component {
                         <StreamProperty
                             id="y"
                             value={this.props.configuration.y}
-                            fieldName="Y axis field*"
-                            filter={Types.dataset.metadata.linear}
+							fieldName="Y 轴*"                            filter={Types.dataset.metadata.linear}
                             onChange={(id, value) => this.props.handleSubChartPropertyChange(id, value)}
                             metadata={this.props.metadata}
                             fullWidth
@@ -76,7 +75,7 @@ class LineAreaBar extends Component {
                         <StreamProperty
                             id="color"
                             value={this.props.configuration.color}
-                            fieldName="Data field, according to which, color categorization is done"
+                            fieldName="数据字段, 基于此字段，进行颜色分类"
                             filter={Constants.ordinal}
                             metadata={this.props.metadata}
                             onChange={(id, value) => this.props.handleSubChartPropertyChange(id, value)}
@@ -95,7 +94,7 @@ class LineAreaBar extends Component {
                                 <ColorProperty
                                     id="fill"
                                     value={this.props.configuration.fill}
-                                    fieldName="Color in which data should be plotted"
+                                    fieldName="应绘制数据的颜色"
                                     onChange={(id, value) => this.props.handleSubChartPropertyChange(id, value)}
                                 />
                                 <br />
@@ -109,7 +108,7 @@ class LineAreaBar extends Component {
                                 <SwitchProperty
                                     id="stacked"
                                     value={this.props.configuration.stacked}
-                                    fieldName="Stack this chart"
+                                    fieldName="堆叠此图表"
                                     onChange={(id, value) => this.props.handleSubChartPropertyChange(id, value)}
                                 />
                             </div>) :
@@ -126,7 +125,7 @@ class LineAreaBar extends Component {
                                 <TextProperty
                                     id="strokeWidth"
                                     value={this.props.configuration.style.strokeWidth}
-                                    fieldName="Stroke width of the line plotted"
+                                    fieldName="图表曲线线宽"
                                     onChange={(id, value) =>
                                         this.props.handleSubChartStylePropertyChange(id, value)}
                                     fullWidth
@@ -140,7 +139,7 @@ class LineAreaBar extends Component {
                                 <TextProperty
                                     id="fillOpacity"
                                     value={this.props.configuration.style.fillOpacity}
-                                    fieldName="Opacity of the colored area"
+                                    fieldName="颜色区域透明度"
                                     onChange={(id, value) =>
                                         this.props.handleSubChartStylePropertyChange(id, value)}
                                     fullWidth
@@ -155,7 +154,7 @@ class LineAreaBar extends Component {
                                 <TextProperty
                                     id="markRadius"
                                     value={this.props.configuration.style.markRadius}
-                                    fieldName="Radius of the mark rendered in the chart"
+                                    fieldName="图表中标注显示的半径"
                                     onChange={(id, value) => this.props.handleSubChartStylePropertyChange(id, value)}
                                     fullWidth
                                 />
@@ -170,7 +169,7 @@ class LineAreaBar extends Component {
                                     &nbsp; &nbsp;
                                     <FlatButton
                                         primary
-                                        label="Default"
+                                        label="缺省"
                                         onClick={() => this.props.addColorMember('colorScale')}
                                     />
                                 </a>
@@ -211,7 +210,7 @@ class LineAreaBar extends Component {
                             (<div>
                                 <br />
                                 <br />
-                                <a>If certain categories are required to be grouped in a certain color</a>
+                                <a>如果某些类别需要按特定颜色分组</a>
                                 <Table>
                                     <TableBody displayRowCheckbox={false}>
                                         {this.props.configuration.colorDomain.map((colorDomainMember, index) =>
@@ -244,7 +243,7 @@ class LineAreaBar extends Component {
                             </div>) :
                             (null)}
                         <br />
-                        <FlatButton label="Remove Chart" onClick={() => this.props.removeChart()} primary />
+                        <FlatButton label="删除图表" onClick={() => this.props.removeChart()} primary />
                         <br />
                         <br />
                     </div>

@@ -112,7 +112,7 @@ export default class WidgetConfigurationPane extends Component {
     renderHeader(selectedWidget) {
         return (
             <div style={{ display: 'flex' }}>
-                <IconButton tooltip="Save and close" onClick={this.handlePaneClose}>
+                <IconButton tooltip="保存并关闭" onClick={this.handlePaneClose}>
                     <NavigationArrowForward />
                 </IconButton>
                 <div style={styles.header}>

@@ -146,7 +146,7 @@ class ProviderConfigurator extends Component {
         return (
             <div style={{ margin: 10, fontFamily: 'Roboto, sans-serif', color: 'white' }}>
                 <SelectField
-                    floatingLabelText='Select a data provider type & configure its properties'
+                    floatingLabelText='选择一个数据提供者并配置其属性'
                     value={this.props.providerType}
                     onChange={(e, i, v) => this.props.handleProviderTypeChange(v)}
                     fullWidth

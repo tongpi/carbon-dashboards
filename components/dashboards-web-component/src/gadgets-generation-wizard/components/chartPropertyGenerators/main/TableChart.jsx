@@ -198,7 +198,7 @@ class TableChart extends Component {
                 <br />
                 <a>Columns and titles to be displayed*</a>
                 <FlatButton
-                    label="Select All/None"
+                    label="全选/不选"
                     style={{ marginLeft: 10, paddingLeft: 10, paddingRight: 10 }}
                     onClick={() => this.toggleSelectAll()}
                     primary
@@ -215,12 +215,12 @@ class TableChart extends Component {
                                     />
                                     <CardText>
                                         <Toggle
-                                            fieldName="Select Column"
+                                            fieldName="选择列"
                                             onChange={(e, checked) => this.selectColumn(index, checked)}
                                             value={this.state.configuration.charts[0].filterColumn[index]}
                                         />
                                         <Toggle
-                                            fieldName="Enable Color Based Categorization"
+                                            fieldName="启用给予类别的颜色"
                                             onChange={(e, checked) => this.colorBasedCategorization(index, checked)}
                                             value={column.colorBasedStyle}
                                         />
@@ -228,25 +228,25 @@ class TableChart extends Component {
                                             <TextProperty
                                                 id="title"
                                                 value={column.title}
-                                                fieldName="Title of the Column"
+                                                fieldName="列标题"
                                                 onChange={(id, value) => this.handleColumnPropertyChange(index, id, value)}
                                             />
                                             <TextProperty
                                                 id="timeFormat"
                                                 value={column.timeFormat}
-                                                fieldName="Time formatting regex if the column contains time series data"
+                                                fieldName="包含数据序列数据的时间正则表达式格式"
                                                 onChange={(id, value) => this.handleColumnPropertyChange(index, id, value)}
                                                 fullWidth
                                             />
                                             <ColorProperty
                                                 id={'textColor'}
                                                 value={column.textColor}
-                                                fieldName="Color of Text in Cell"
+                                                fieldName="单元格文本色"
                                                 onChange={(id, value) =>
                                                     this.handleColumnPropertyChange(index, id, value)}
                                             />
                                             <br />
-                                            <a>Color set to use in the charts</a>
+                                            <a>图表中使用的颜色</a>
                                             {(!column.colorScale || column.colorScale.length === 0) ?
                                                 (
                                                     <a>
@@ -290,7 +290,7 @@ class TableChart extends Component {
                                             </div>
                                             <br />
                                             <br />
-                                            <a>If certain categories are required to be grouped in a certain color</a>
+                                            <a>如果某些类别需要按特定颜色分组</a>
                                             <Table>
                                                 <TableBody displayRowCheckbox={false}>
                                                     {column.colorDomain && column.colorDomain.map((colorDomainMember, domainIndex) =>
@@ -332,23 +332,23 @@ class TableChart extends Component {
                 <TextProperty
                     id="maxLength"
                     value={this.state.configuration.maxLength}
-                    fieldName="Maximum number of rows in the table*"
+                    fieldName="表格的最大行数*"
                     onChange={(id, value) => this.handlePropertyChange(id, value)}
                     number
                     fullWidth
                 />
                 <Toggle
-                    fieldName="Enable Pagination"
+                    fieldName="启用翻页"
                     onChange={(e, checked) => this.toggleConfigProperty('pagination', checked)}
                     value={this.state.configuration.pagination}
                 />
                 <Toggle
-                    fieldName="Enable Filtering of Table"
+                    fieldName="启用表格过滤"
                     onChange={(e, checked) => this.toggleConfigProperty('filterable', checked)}
                     value={this.state.configuration.filterable}
                 />
                 <Toggle
-                    fieldName="Append Data to the Table everytime"
+                    fieldName="总是添加数据到表格"
                     onChange={(e, checked) => this.toggleConfigProperty('append', checked)}
                     value={this.state.configuration.append}
                 />

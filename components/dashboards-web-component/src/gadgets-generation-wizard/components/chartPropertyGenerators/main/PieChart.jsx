@@ -127,7 +127,7 @@ class Pie extends Component {
                 <StreamProperty
                     id="x"
                     value={this.state.configuration.charts[0].x}
-                    fieldName="Data field*"
+                    fieldName="数据字段*"
                     filter={Types.dataset.metadata.linear}
                     onChange={(id, value) => this.handleInnerChartPropertyChange(id, value)}
                     metadata={this.props.metadata}
@@ -137,7 +137,7 @@ class Pie extends Component {
                 <SelectProperty
                     id="chartType"
                     value={this.state.configuration.chartType}
-                    fieldName="Type of the chart*"
+                    fieldName="图表类型*"
                     options={{
                         values: [Types.chart.pie, Types.chart.donut, Types.chart.gauge],
                         texts: [Constants.CHART_NAMES.PIE_CHART, Constants.CHART_NAMES.DONUT_CHART,
@@ -150,7 +150,7 @@ class Pie extends Component {
                 <StreamProperty
                     id="color"
                     value={this.props.configuration.charts[0].color}
-                    fieldName="Field to color categorize*"
+                    fieldName="颜色类别字段*"
                     filter={Types.dataset.metadata.ordinal}
                     onChange={(id, value) => this.handleInnerChartPropertyChange(id, value)}
                     metadata={this.props.metadata}
@@ -161,7 +161,7 @@ class Pie extends Component {
                 <SwitchProperty
                     id="legend"
                     value={this.state.configuration.legend}
-                    fieldName="Show legend"
+                    fieldName="显示图例"
                     onChange={(id, value) => this.handleChartPropertyChange(id, value)}
                 />
                 <br />
@@ -173,7 +173,7 @@ class Pie extends Component {
                     onExpandChange={e => this.setState({ expandAdvanced: e })}
                 >
                     <CardHeader
-                        title="Advanced Settings"
+                        title="高级设置"
                         actAsExpander
                         showExpandableButton
                     />
@@ -185,7 +185,7 @@ class Pie extends Component {
                         <SwitchProperty
                             id="append"
                             value={this.state.configuration.append}
-                            fieldName="Append new data to the chart"
+                            fieldName="添加新数据到图表"
                             onChange={(id, value) => this.handleChartPropertyChange(id, value)}
                         />
                         <br />
@@ -193,10 +193,10 @@ class Pie extends Component {
                         <SelectProperty
                             id="legendOrientation"
                             value={this.state.configuration.legendOrientation}
-                            fieldName="Orientation of the legend relative to the chart"
+                            fieldName="相对于图表的图例位置"
                             options={{
                                 values: ['top', 'bottom', 'left', 'right'],
-                                texts: ['Top', 'Bottom', 'Left', 'Right'],
+                                texts: ['上方', '下方', '左边', '右边'],
                             }}
                             onChange={(id, value) => this.handleChartPropertyChange(id, value)}
                             fullWidth
@@ -210,7 +210,7 @@ class Pie extends Component {
                                     &nbsp; &nbsp;
                                     <FlatButton
                                         primary
-                                        label="Default"
+                                        label="缺省"
                                         onClick={() => this.addColorMember('colorScale')}
                                     />
                                 </a>
@@ -246,7 +246,7 @@ class Pie extends Component {
                                 <br />
                             </div>) : (null)}
                         <br />
-                        <a>If certain categories are required to be grouped in a certain color</a>
+                        <a>如果某些类别需要按特定颜色分组</a>
                         <Table>
                             <TableBody displayRowCheckbox={false}>
                                 {this.props.configuration.charts[0].colorDomain.map((colorDomainMember, index) =>
@@ -276,11 +276,11 @@ class Pie extends Component {
                             </IconButton>
                             <br />
                         </div>
-                        <h3>Style</h3>
+                        <h3>样式</h3>
                         <ColorProperty
                             id="legendTitleColor"
                             value={this.state.configuration.style.legendTitleColor}
-                            fieldName="Text color of the legend title"
+                            fieldName="图例标题色"
                             onChange={(id, value) => this.handleChartStylePropertyChange(id, value)}
                             fullWidth
                         />
@@ -288,7 +288,7 @@ class Pie extends Component {
                         <ColorProperty
                             id="legendTextColor"
                             value={this.state.configuration.style.legendTextColor}
-                            fieldName="Text color of the text in the legend"
+                            fieldName="图例文本色"
                             onChange={(id, value) => this.handleChartStylePropertyChange(id, value)}
                             fullWidth
                         />

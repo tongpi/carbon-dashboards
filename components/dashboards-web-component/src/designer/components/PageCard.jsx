@@ -134,13 +134,13 @@ class PageCard extends Component {
 
         return (
             <Dialog
-                title={`Do you want to delete '${page.name}' page?`}
+                title={`确信要删除 '${page.name}' 页面吗?`}
                 actions={actionsButtons}
                 open={this.state.isDashboardDeleteConfirmDialogOpen}
                 modal={false}
                 onRequestClose={this.hideDashboardDeleteConfirmDialog}
             >
-                This action cannot be undone
+                该操作一旦执行不能被撤销
             </Dialog>
         );
     }
@@ -210,7 +210,7 @@ class PageCard extends Component {
                         </div>
                         <div style={{ marginRight: 0 }}>
                             <IconButton
-                                tooltip="Delete"
+                                tooltip="删除"
                                 style={{ paddingTop: 0, height: 24 }}
                                 disabled={page.id === this.props.landingPageId}
                                 onClick={this.showDashboardDeleteConfirmDialog}

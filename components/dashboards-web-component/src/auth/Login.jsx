@@ -183,7 +183,7 @@ export default class Login extends Component {
                             label={<FormattedMessage id="login.title" defaultMessage="Login"/>}
                             disabledBackgroundColor="rgb(27, 40, 47)"
                         />
-                        <br />
+                        {/* <br />
                         <br />
                         <div style={styles.cookiePolicy}>
                             <div>
@@ -217,8 +217,8 @@ export default class Login extends Component {
                                 </a>
                                 <FormattedMessage id="login.privacy.policy.after" defaultMessage="."/>
                             </div>
-                        </div>
-                    </FormPanel>
+                        </div>*/}
+                    </FormPanel> 
                     <Snackbar
                         message={this.state.error}
                         open={this.state.showError}

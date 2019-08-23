@@ -41,6 +41,7 @@
   "design.button": "设计",
   "view.button": "查看",
   "delete": "删除",
+  "delete.button":"删除",
   "search.hint.text": "搜索...",
   "dialog-box.confirmation.yes": "是",
   "dialog-box.confirmation.no": "否",
